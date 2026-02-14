@@ -1,79 +1,46 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+signal take_damage(recieved_damage : int)
 
-# Количество прыжков
-const MAX_JUMPS = 2
-var jump_count = 0
+# Preload scenes
+#@onready var slash_scene = preload("res://Player/slash.tscn")
+#@onready var arrow_scene = preload("res://Player/arrow.tscn")
+#@onready var nuke_scene = preload("res://Player/nuke.tscn")
 
-@onready var animated_sprite = $AnimatedSprite2D
+# Links to childs
+@onready var camera : Camera2D = $Camera2D
+@onready var collision : CollisionShape2D = $CollisionShape2D
+@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var inv_frames : Timer = $Timers/InvFrames
+@onready var dash_length : Timer = $Timers/DashLength
+@onready var dash_delay : Timer = $Timers/DashDelay
 
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-		
-		# Сбрасываем счетчик прыжков при падении (если не в воздухе)
-		if jump_count == 0:
-			jump_count = 1
-	else:
-		# На земле сбрасываем счетчик прыжков
-		jump_count = 0
+# consts
+const G := Vector2(0, 980)
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump"):
-		if is_on_floor():
-			# Прыжок с земли
-			velocity.y = JUMP_VELOCITY
-			jump_count = 1
-			animated_sprite.play("jump")
-		elif jump_count < MAX_JUMPS:
-			# Двойной прыжок в воздухе
-			velocity.y = JUMP_VELOCITY
-			jump_count += 1
-			animated_sprite.play("air_jump")
+@export_category("Stats")
+@export var SPEED := 250.0
+@export var JUMP_VELOCITY := -600.0
+@export var Health := 5
+@export var maxHealth := 5
+@export var Damage := 5
+@export_category("Abilities")
+@export var have_dash := false
 
-	# Get the input direction and handle the movement/deceleration.
-	var direction := Input.get_axis("left", "right")
-	if direction:
-		velocity.x = direction * SPEED
-		# Поворачиваем спрайт в зависимости от направления
-		animated_sprite.flip_h = direction < 0
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+# canSmth vars
+var canAttack := true
+var canDash := true
 
-	move_and_slide()
-	
-	# Обновляем анимацию после движения
-	update_animation()
+# doing smth vars
+var jumping := false
+var falling := false
+var dashing := false
+var attacking := false
 
-func update_animation():
-	# Определяем текущее состояние для анимации
-	
-	if is_on_floor():
-		# На земле
-		if velocity.x == 0:
-			# Стоим на месте
-			animated_sprite.play("idle")
-		else:
-			# Бежим
-			animated_sprite.play("run")
+# is fucking invincible vars
+var is_invincible := false
 
-## Функция для получения урона (пока без реализации, но анимация есть)
-#func take_damage():
-	#animated_sprite.play("hurt")
-	## Здесь можно добавить логику получения урона
-	#await animated_sprite.animation_finished
-	## После анимации урона возвращаемся к обычной анимации
-	#update_animation()
-#
-## Функция смерти
-#func die():
-	#animated_sprite.play("death")
-	## Отключаем управление
-	#set_physics_process(false)
-	## Можно добавить таймер для перезагрузки сцены
-	#await animated_sprite.animation_finished
-	## Здесь логика смерти (например, перезагрузка сцены)
-	## get_tree().reload_current_scene()
+# gameplay vars
+var raw_dir := Vector2.ZERO
+var move_dir := 0.0
+var last_dir := 1.0

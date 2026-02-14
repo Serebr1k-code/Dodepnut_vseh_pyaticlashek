@@ -2,9 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cghmjlu3xlrus" path="res://player/player.gd" id="1_fjrip"]
 [ext_resource type="Texture2D" uid="uid://0lwfblx284g7" path="res://resources/Punk/Punk_doublejump.png" id="2_smehm"]
+[ext_resource type="Script" uid="uid://d2k5neluavkd5" path="res://StateMachines/Player/PlayerStateMachine.gd" id="3_btcbx"]
+[ext_resource type="Script" uid="uid://btqvepdmcdipe" path="res://StateMachines/Player/AirbornePlayerState.gd" id="4_fhl08"]
 [ext_resource type="Texture2D" uid="uid://koknjdypstgm" path="res://resources/Punk/Punk_idle.png" id="5_d2wvv"]
+[ext_resource type="Script" uid="uid://cgm16lgy88vqd" path="res://StateMachines/Player/IdlePlayerState.gd" id="5_vtle1"]
 [ext_resource type="Texture2D" uid="uid://bkfr1vkdavkq2" path="res://resources/Punk/Punk_jump.png" id="6_3v2ag"]
+[ext_resource type="Script" uid="uid://dr8trs0g1x0" path="res://StateMachines/Player/MovePlayerState.gd" id="6_od3ui"]
 [ext_resource type="Texture2D" uid="uid://bflrkny4x7fgd" path="res://resources/Punk/Punk_run.png" id="7_jej6c"]
+[ext_resource type="Script" uid="uid://bguayw2envskl" path="res://Controllers/PlayerController.gd" id="8_od3ui"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fdfoy"]
 radius = 9.0
@@ -174,15 +179,71 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=805297375]
-position = Vector2(-28, 0)
 scale = Vector2(2, 2)
 script = ExtResource("1_fjrip")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=780200393]
-position = Vector2(14, -17)
 shape = SubResource("CapsuleShape2D_fdfoy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=560909146]
-position = Vector2(14, -24)
+position = Vector2(1, -7)
 sprite_frames = SubResource("SpriteFrames_ke2ow")
-animation = &"idle"
+animation = &"run"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1337940904]
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+editor_draw_drag_margin = true
+
+[node name="PlayerController" type="Node" parent="." unique_id=559392814 node_paths=PackedStringArray("p", "m")]
+script = ExtResource("8_od3ui")
+p = NodePath("..")
+m = NodePath("../PlayerStateMachine")
+metadata/_custom_type_script = "uid://bguayw2envskl"
+
+[node name="Timers" type="Node" parent="." unique_id=253110319]
+
+[node name="InvFrames" type="Timer" parent="Timers" unique_id=4056854]
+wait_time = 0.5
+one_shot = true
+
+[node name="DashLength" type="Timer" parent="Timers" unique_id=1585941109]
+wait_time = 0.2
+one_shot = true
+
+[node name="DashDelay" type="Timer" parent="Timers" unique_id=1837150371]
+wait_time = 0.3
+one_shot = true
+
+[node name="PlayerStateMachine" type="Node" parent="." unique_id=277760612 node_paths=PackedStringArray("p", "init_state")]
+script = ExtResource("3_btcbx")
+p = NodePath("..")
+init_state = NodePath("IdlePlayerState")
+metadata/_custom_type_script = "uid://d2k5neluavkd5"
+
+[node name="AirbornePlayerState" type="Node" parent="PlayerStateMachine" unique_id=1159239997 node_paths=PackedStringArray("p", "c", "state_machine")]
+script = ExtResource("4_fhl08")
+p = NodePath("../..")
+c = NodePath("../../PlayerController")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://btqvepdmcdipe"
+
+[node name="IdlePlayerState" type="Node" parent="PlayerStateMachine" unique_id=1798678142 node_paths=PackedStringArray("p", "c", "state_machine")]
+script = ExtResource("5_vtle1")
+p = NodePath("../..")
+c = NodePath("../../PlayerController")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://cgm16lgy88vqd"
+
+[node name="MovePlayerState" type="Node" parent="PlayerStateMachine" unique_id=273966952 node_paths=PackedStringArray("p", "c", "state_machine")]
+script = ExtResource("6_od3ui")
+p = NodePath("../..")
+c = NodePath("../../PlayerController")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://dr8trs0g1x0"
+
+[connection signal="take_damage" from="." to="PlayerController" method="_on_player_take_damage"]
+[connection signal="timeout" from="Timers/InvFrames" to="PlayerController" method="_on_inv_frames_timeout"]
+[connection signal="timeout" from="Timers/DashLength" to="PlayerController" method="_on_dash_length_timeout"]
+[connection signal="timeout" from="Timers/DashDelay" to="PlayerController" method="_on_dash_delay_timeout"]
