@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b10cys2toty3r"
-path="res://.godot/imported/Biker_death.png-6e5fe9227b560f5e9479fe38fe1e31fc.ctex"
+uid="uid://u3irm10utmwy"
+path="res://.godot/imported/Cyborg_climb.png-ce93139a0ab788558d6fe284aa4d1ea2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/Biker/Biker_death.png"
-dest_files=["res://.godot/imported/Biker_death.png-6e5fe9227b560f5e9479fe38fe1e31fc.ctex"]
+source_file="res://resources/Cyborg/Cyborg_climb.png"
+dest_files=["res://.godot/imported/Cyborg_climb.png-ce93139a0ab788558d6fe284aa4d1ea2.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv7s0lx0ggy87"
-path="res://.godot/imported/Biker_run.png-375a0a1d38765e469b7a16c3a8be5adc.ctex"
+uid="uid://bun023g47lsb4"
+path="res://.godot/imported/Cyborg_punch.png-d34a5f86258e69f4b6d828b1519b7b35.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/Biker/Biker_run.png"
-dest_files=["res://.godot/imported/Biker_run.png-375a0a1d38765e469b7a16c3a8be5adc.ctex"]
+source_file="res://resources/Cyborg/Cyborg_punch.png"
+dest_files=["res://.godot/imported/Cyborg_punch.png-d34a5f86258e69f4b6d828b1519b7b35.ctex"]
 
 [params]
 
