@@ -575,6 +575,7 @@ script = ExtResource("1_fjrip")
 shape = SubResource("RectangleShape2D_ebec5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1478263785]
+z_index = 1
 position = Vector2(0.5, -5.5)
 sprite_frames = SubResource("SpriteFrames_e7oew")
 animation = &"idle"
