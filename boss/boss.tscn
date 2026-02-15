@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://dws56saqrvhe3"]
+
+[ext_resource type="Texture2D" uid="uid://ct66dh54bwspu" path="res://icon.svg" id="1_b105h"]
+[ext_resource type="Script" uid="uid://svjdew4retf8" path="res://boss/boss.gd" id="1_nnfxe"]
+[ext_resource type="Script" uid="uid://80iqx3ngq3ty" path="res://boss/bossController.gd" id="3_yy71b"]
+[ext_resource type="Script" uid="uid://otfpdytesjsq" path="res://boss/BossStateMachine.gd" id="4_270ai"]
+[ext_resource type="Script" uid="uid://cmgjq4tbesddb" path="res://boss/IdleBossState.gd" id="5_hcu6l"]
+[ext_resource type="Script" uid="uid://cn28gubyfosu2" path="res://boss/Attack1BossState.gd" id="6_ti23b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nnfxe"]
+size = Vector2(126, 125)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yy71b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_b105h")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Boss" type="CharacterBody2D" unique_id=1756071142]
+script = ExtResource("1_nnfxe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1952875537]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_nnfxe")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=304339561]
+sprite_frames = SubResource("SpriteFrames_yy71b")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="BossController" type="Node" parent="." unique_id=1611623940 node_paths=PackedStringArray("boss")]
+script = ExtResource("3_yy71b")
+boss = NodePath("..")
+
+[node name="BossStateMachine" type="Node" parent="." unique_id=256145935 node_paths=PackedStringArray("boss", "bossController", "init_state")]
+script = ExtResource("4_270ai")
+boss = NodePath("..")
+bossController = NodePath("../BossController")
+init_state = NodePath("IdleBossState")
+
+[node name="IdleBossState" type="Node" parent="BossStateMachine" unique_id=1867310562 node_paths=PackedStringArray("p", "c", "state_machine")]
+script = ExtResource("5_hcu6l")
+p = NodePath("../..")
+c = NodePath("../../BossController")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://dhuerabl0dl6h"
+
+[node name="Attack1BossState" type="Node" parent="BossStateMachine" unique_id=2114991180 node_paths=PackedStringArray("p", "c", "state_machine")]
+script = ExtResource("6_ti23b")
+p = NodePath("../..")
+c = NodePath("../../BossController")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://dhuerabl0dl6h"
+
+[node name="Timers" type="Node" parent="." unique_id=2006223029]
+
+[node name="BetweenAttackTime" type="Timer" parent="Timers" unique_id=781249589]
+wait_time = 0.2
+autostart = true
+
+[node name="Attack1Delay" type="Timer" parent="Timers" unique_id=150250898]
+wait_time = 0.1
+
+[connection signal="attack_end" from="." to="BossStateMachine" method="_on_boss_attack_end"]
+[connection signal="timeout" from="Timers/BetweenAttackTime" to="BossStateMachine" method="_on_between_attack_time_timeout"]
+[connection signal="timeout" from="Timers/Attack1Delay" to="BossStateMachine/Attack1BossState" method="_on_attack_1_delay_timeout"]

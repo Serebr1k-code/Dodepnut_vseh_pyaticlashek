@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://buxe3aslh20sa" path="res://player/player.tscn" id="1_ymuff"]
 [ext_resource type="Texture2D" uid="uid://30ryuh65wcrg" path="res://resources/ground.png" id="2_6cqfu"]
 [ext_resource type="PackedScene" uid="uid://dxcxgu5koeh62" path="res://player/hud.tscn" id="3_6cqfu"]
+[ext_resource type="PackedScene" uid="uid://dws56saqrvhe3" path="res://boss/boss.tscn" id="4_ldbvv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ldbvv"]
 texture = ExtResource("2_6cqfu")
@@ -207,3 +208,6 @@ tile_map_data = PackedByteArray("AAAAAAQAAAADAAAAAAAAAAMAAAADAAAAAAD//wQAAAADAAA
 tile_set = SubResource("TileSet_l7rq3")
 
 [node name="Hud" parent="." unique_id=578226851 instance=ExtResource("3_6cqfu")]
+
+[node name="Boss" parent="." unique_id=1756071142 instance=ExtResource("4_ldbvv")]
+position = Vector2(1, -301)
