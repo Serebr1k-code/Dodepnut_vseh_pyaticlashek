@@ -6,6 +6,7 @@ signal take_damage(recieved_damage : int)
 #@onready var slash_scene = preload("res://Player/slash.tscn")
 #@onready var arrow_scene = preload("res://Player/arrow.tscn")
 #@onready var nuke_scene = preload("res://Player/nuke.tscn")
+@onready var projectile_scene = preload("res://player/projectile.tscn")
 
 # Links to childs
 @onready var camera : Camera2D = $Camera2D
@@ -14,6 +15,8 @@ signal take_damage(recieved_damage : int)
 @onready var inv_frames : Timer = $Timers/InvFrames
 @onready var dash_length : Timer = $Timers/DashLength
 @onready var dash_delay : Timer = $Timers/DashDelay
+@onready var magic_anim : Timer = $Timers/MagicAnimation
+@onready var spell_pos : Marker2D = $SpellPos
 
 # consts
 const G := Vector2(0, 980)
@@ -30,12 +33,14 @@ const G := Vector2(0, 980)
 # canSmth vars
 var canAttack := true
 var canDash := true
+var canCast := true
 
 # doing smth vars
 var jumping := false
 var falling := false
 var dashing := false
 var attacking := false
+var casting := false
 
 # is fucking invincible vars
 var is_invincible := false

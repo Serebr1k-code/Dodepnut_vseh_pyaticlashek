@@ -46,11 +46,16 @@ func handle_input():
 		p.dashing = true
 		p.canDash = false
 		p.dash_length.start()
+	
+	# Get cast spell input
+	if Input.is_action_just_pressed("Spell") and p.canCast and not p.casting:
+		m.change_state("cast")
 
 func handle_movement():
 	# Move player left and right
 	if not p.dashing:
 		p.sprite.flip_h = p.last_dir == -1
+		p.spell_pos.position.x = 14.5*p.last_dir
 		if p.move_dir:
 			p.velocity.x = move_toward(p.velocity.x, p.move_dir * p.SPEED, p.SPEED)
 		else:
@@ -58,6 +63,7 @@ func handle_movement():
 	# Move player while dash
 	else:
 		p.sprite.flip_h = p.last_dir == -1
+		p.spell_pos.position.x = 14.5*p.last_dir
 		p.velocity.x = p.last_dir * p.SPEED * 3
 		p.velocity.y = 0.0
 
@@ -82,3 +88,14 @@ func _on_player_take_damage(recieved_damage: int) -> void:
 
 func _on_dash_delay_timeout() -> void:
 	pass # Replace with function body.
+
+
+func _on_magic_animation_timeout() -> void:
+	var proj : Dictionary [int, Projectile] = {}
+	for i in range(0, 1):
+		proj[i] = p.projectile_scene.instantiate()
+		proj[i].position = p.spell_pos.global_position
+		proj[i].velocity = Vector2((600+randi_range(0, 100)) * p.last_dir, randi_range(-200, 200))
+	for i in range(0, 1):
+		p.get_parent().add_child(proj[i])
+	m.change_state("idle")

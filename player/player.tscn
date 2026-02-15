@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b26mqvxm0bvxs" path="res://resources/player/idle.png" id="10_wodsf"]
 [ext_resource type="Texture2D" uid="uid://cgiihvxt73lhq" path="res://resources/player/Magic.png" id="11_32hag"]
 [ext_resource type="Texture2D" uid="uid://8elee2sikpqa" path="res://resources/player/run.png" id="12_tqiix"]
+[ext_resource type="Script" uid="uid://biqq0o57cpguo" path="res://StateMachines/Player/CastPlayerState.gd" id="14_kb6p2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ebec5"]
 size = Vector2(13, 21)
@@ -576,9 +577,7 @@ shape = SubResource("RectangleShape2D_ebec5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1478263785]
 position = Vector2(0.5, -5.5)
 sprite_frames = SubResource("SpriteFrames_e7oew")
-animation = &"dash"
-frame = 9
-frame_progress = 0.6333832
+animation = &"idle"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1337940904]
 position_smoothing_enabled = true
@@ -604,6 +603,10 @@ one_shot = true
 
 [node name="DashDelay" type="Timer" parent="Timers" unique_id=1837150371]
 wait_time = 0.3
+one_shot = true
+
+[node name="MagicAnimation" type="Timer" parent="Timers" unique_id=1458404943]
+wait_time = 2.6
 one_shot = true
 
 [node name="PlayerStateMachine" type="Node" parent="." unique_id=277760612 node_paths=PackedStringArray("p", "init_state")]
@@ -633,7 +636,18 @@ c = NodePath("../../PlayerController")
 state_machine = NodePath("..")
 metadata/_custom_type_script = "uid://dr8trs0g1x0"
 
+[node name="CastPlayerState" type="Node" parent="PlayerStateMachine" unique_id=401787018 node_paths=PackedStringArray("p", "c", "state_machine")]
+script = ExtResource("14_kb6p2")
+p = NodePath("../..")
+c = NodePath("../../PlayerController")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://biqq0o57cpguo"
+
+[node name="SpellPos" type="Marker2D" parent="." unique_id=58253117]
+position = Vector2(14.5, -8.5)
+
 [connection signal="take_damage" from="." to="PlayerController" method="_on_player_take_damage"]
 [connection signal="timeout" from="Timers/InvFrames" to="PlayerController" method="_on_inv_frames_timeout"]
 [connection signal="timeout" from="Timers/DashLength" to="PlayerController" method="_on_dash_length_timeout"]
 [connection signal="timeout" from="Timers/DashDelay" to="PlayerController" method="_on_dash_delay_timeout"]
+[connection signal="timeout" from="Timers/MagicAnimation" to="PlayerController" method="_on_magic_animation_timeout"]

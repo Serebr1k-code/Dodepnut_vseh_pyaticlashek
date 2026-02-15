@@ -8,7 +8,9 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	current_state.update(delta)
 	
-	if !p.is_on_floor():
+	if current_state.name == "cast":
+		pass
+	elif !p.is_on_floor():
 		change_state("airborne")
 	elif p.velocity.x:
 		change_state("move")

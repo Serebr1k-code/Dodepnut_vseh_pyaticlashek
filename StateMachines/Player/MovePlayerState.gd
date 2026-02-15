@@ -7,6 +7,7 @@ func enter():
 	#if p.hud: p.hud.change_current_state(name)
 	if p.sprite and !p.dashing: p.sprite.play("run")
 	if p.sprite and p.dashing: p.sprite.play("dash")
+	p.canCast = true
 
 func exit():
 	pass

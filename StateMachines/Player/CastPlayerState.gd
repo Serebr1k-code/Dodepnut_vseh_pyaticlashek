@@ -1,26 +1,25 @@
-class_name AirbornePlayerState extends PlayerState
+class_name CastPlayerState extends PlayerState
 
 func _ready() -> void:
-	name = "airborne"
+	name = "cast"
 
 func enter():
 	#if p.hud: p.hud.change_current_state(name)
-	if p.sprite: p.sprite.play("idle")
+	if p.sprite: p.sprite.play("magic")
 	p.canCast = false
+	p.casting = true
+	p.sprite.play("magic")
+	p.magic_anim.start()
+	p.velocity.x = 0
 
 func exit():
-	pass
+	p.casting = false
 
 func update_input(event: InputEvent):
 	pass
 
 func update(delta: float):
-	if p.dashing:
-		p.sprite.play("dash")
-	else:
-		p.sprite.play("idle")
-	c.handle_input()
+	pass
 
 func update_physics(delta: float):
 	c.handle_physics(delta)
-	c.handle_movement()

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cyxh58rnxgmhk"]
+
+[ext_resource type="Texture2D" uid="uid://dooueihammq37" path="res://resources/player/ball.png" id="1_d1ygb"]
+[ext_resource type="Script" uid="uid://c7mfgvhchvwu5" path="res://player/projectile.gd" id="1_islhu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_islhu"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q5b1o"]
+radius = 5.0
+
+[node name="Projectile" type="CharacterBody2D" unique_id=1865185389]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_islhu")
+
+[node name="Ball" type="Sprite2D" parent="." unique_id=245791362]
+scale = Vector2(2, 2)
+texture = ExtResource("1_d1ygb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1653412181]
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_islhu")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1904804559]
+scale = Vector2(2, 2)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1972999576]
+shape = SubResource("CircleShape2D_q5b1o")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
