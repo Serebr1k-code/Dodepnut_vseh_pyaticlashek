@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgiihvxt73lhq"
-path="res://.godot/imported/Magic.png-2f4c254a16cb5db694f8939b98ec2da6.ctex"
+uid="uid://6embvqt6a63h"
+path="res://.godot/imported/Dash.png-950303b44e5606b0614e9f6edf86a579.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/enemy/Magic.png"
-dest_files=["res://.godot/imported/Magic.png-2f4c254a16cb5db694f8939b98ec2da6.ctex"]
+source_file="res://resources/player/Dash.png"
+dest_files=["res://.godot/imported/Dash.png-950303b44e5606b0614e9f6edf86a579.ctex"]
 
 [params]
 

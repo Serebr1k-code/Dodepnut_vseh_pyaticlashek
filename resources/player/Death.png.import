@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dooueihammq37"
-path="res://.godot/imported/ball.png-c94f7d822d4565d1114dd3a6ae1c583d.ctex"
+uid="uid://n50l0rhr8375"
+path="res://.godot/imported/Death.png-1e205ab644210813abe63c73ad2f8120.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/enemy/ball.png"
-dest_files=["res://.godot/imported/ball.png-c94f7d822d4565d1114dd3a6ae1c583d.ctex"]
+source_file="res://resources/player/Death.png"
+dest_files=["res://.godot/imported/Death.png-1e205ab644210813abe63c73ad2f8120.ctex"]
 
 [params]
 

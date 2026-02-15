@@ -5,7 +5,7 @@ func _ready() -> void:
 
 func enter():
 	#if p.hud: p.hud.change_current_state(name)
-	pass
+	if p.sprite: p.sprite.play("idle")
 
 func exit():
 	pass

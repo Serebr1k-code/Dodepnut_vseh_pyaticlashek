@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://d3lxapmo4mx2m"]
 
-[ext_resource type="Texture2D" uid="uid://475q2ecyvp2q" path="res://resources/enemy/Attack1.png" id="1_1wwld"]
-[ext_resource type="Texture2D" uid="uid://b26mqvxm0bvxs" path="res://resources/enemy/idle.png" id="1_ofsxj"]
-[ext_resource type="Texture2D" uid="uid://8elee2sikpqa" path="res://resources/enemy/run.png" id="2_ppra6"]
-[ext_resource type="Texture2D" uid="uid://mlyrny3wrkt8" path="res://resources/enemy/Attack2.png" id="2_y5vj3"]
-[ext_resource type="Texture2D" uid="uid://n50l0rhr8375" path="res://resources/enemy/Death.png" id="3_5ffra"]
-[ext_resource type="Texture2D" uid="uid://cgiihvxt73lhq" path="res://resources/enemy/Magic.png" id="5_e355f"]
+[ext_resource type="Texture2D" uid="uid://475q2ecyvp2q" path="res://resources/player/Attack1.png" id="1_1wwld"]
+[ext_resource type="Texture2D" uid="uid://b26mqvxm0bvxs" path="res://resources/player/idle.png" id="1_ofsxj"]
+[ext_resource type="Texture2D" uid="uid://8elee2sikpqa" path="res://resources/player/run.png" id="2_ppra6"]
+[ext_resource type="Texture2D" uid="uid://mlyrny3wrkt8" path="res://resources/player/Attack2.png" id="2_y5vj3"]
+[ext_resource type="Texture2D" uid="uid://n50l0rhr8375" path="res://resources/player/Death.png" id="3_5ffra"]
+[ext_resource type="Texture2D" uid="uid://cgiihvxt73lhq" path="res://resources/player/Magic.png" id="5_e355f"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p200p"]
 radius = 7.0

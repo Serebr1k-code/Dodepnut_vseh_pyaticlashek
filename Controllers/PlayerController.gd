@@ -50,12 +50,14 @@ func handle_input():
 func handle_movement():
 	# Move player left and right
 	if not p.dashing:
+		p.sprite.flip_h = p.last_dir == -1
 		if p.move_dir:
 			p.velocity.x = move_toward(p.velocity.x, p.move_dir * p.SPEED, p.SPEED)
 		else:
 			p.velocity.x = move_toward(p.velocity.x, 0, p.SPEED)
 	# Move player while dash
 	else:
+		p.sprite.flip_h = p.last_dir == -1
 		p.velocity.x = p.last_dir * p.SPEED * 3
 		p.velocity.y = 0.0
 

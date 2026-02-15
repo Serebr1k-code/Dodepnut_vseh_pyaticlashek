@@ -10,7 +10,7 @@ func _process(delta: float) -> void:
 	
 	if !p.is_on_floor():
 		change_state("airborne")
-	elif Input.is_action_pressed("Right") or Input.is_action_pressed("Left"):
+	elif p.velocity.x:
 		change_state("move")
 	else:
 		change_state("idle")
