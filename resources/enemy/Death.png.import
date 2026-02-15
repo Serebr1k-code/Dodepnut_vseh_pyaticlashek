@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g3lttwq6mann"
-path="res://.godot/imported/Cyborg_run.png-b583b94c54ba52364cdd40248b4aafae.ctex"
+uid="uid://n50l0rhr8375"
+path="res://.godot/imported/Death.png-0306e88481efe4bd44cde48fe867adcc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/Cyborg/Cyborg_run.png"
-dest_files=["res://.godot/imported/Cyborg_run.png-b583b94c54ba52364cdd40248b4aafae.ctex"]
+source_file="res://resources/enemy/Death.png"
+dest_files=["res://.godot/imported/Death.png-0306e88481efe4bd44cde48fe867adcc.ctex"]
 
 [params]
 

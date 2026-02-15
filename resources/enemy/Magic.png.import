@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://u3irm10utmwy"
-path="res://.godot/imported/Cyborg_climb.png-ce93139a0ab788558d6fe284aa4d1ea2.ctex"
+uid="uid://cgiihvxt73lhq"
+path="res://.godot/imported/Magic.png-2f4c254a16cb5db694f8939b98ec2da6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/Cyborg/Cyborg_climb.png"
-dest_files=["res://.godot/imported/Cyborg_climb.png-ce93139a0ab788558d6fe284aa4d1ea2.ctex"]
+source_file="res://resources/enemy/Magic.png"
+dest_files=["res://.godot/imported/Magic.png-2f4c254a16cb5db694f8939b98ec2da6.ctex"]
 
 [params]
 
