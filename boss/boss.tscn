@@ -85,7 +85,7 @@ boss = NodePath("../..")
 controller = NodePath("../../BossController")
 default_attack_count = 4
 spike_spawn_distance = 150
-spike_count = 5
+spike_count = 40
 state_machine = NodePath("..")
 
 [node name="Timers" type="Node" parent="." unique_id=2006223029]
@@ -95,13 +95,13 @@ wait_time = 2.0
 autostart = true
 
 [node name="Attack1Delay" type="Timer" parent="Timers" unique_id=150250898]
-wait_time = 0.12
+wait_time = 0.1
 
 [node name="Attack2Delay" type="Timer" parent="Timers" unique_id=2002545932]
-wait_time = 1.5999999999999999
+wait_time = 1.0999999999999999
 
 [node name="Attack3Delay" type="Timer" parent="Timers" unique_id=2138823074]
-wait_time = 0.7
+wait_time = 0.85
 
 [connection signal="attack_end" from="." to="BossStateMachine" method="_on_boss_attack_end"]
 [connection signal="timeout" from="Timers/BetweenAttackTime" to="BossStateMachine" method="_on_between_attack_time_timeout"]
