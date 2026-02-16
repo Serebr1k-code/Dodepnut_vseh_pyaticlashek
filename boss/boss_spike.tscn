@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dxaj4jn1gxwao"]
+
+[ext_resource type="Script" uid="uid://bgotoyoth1tgn" path="res://boss/BossSpike.gd" id="1_bufa8"]
+[ext_resource type="Texture2D" uid="uid://16vlpl0kvnkh" path="res://resources/epstein.png" id="1_fpo23"]
+[ext_resource type="Texture2D" uid="uid://ct66dh54bwspu" path="res://icon.svg" id="2_bufa8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nqmc2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_fpo23")
+}],
+"loop": true,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bufa8")
+}],
+"loop": true,
+"name": &"warning",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gigt"]
+size = Vector2(48, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hiex7"]
+size = Vector2(48, 128)
+
+[node name="BossSpike" type="CharacterBody2D" unique_id=1090345998 node_paths=PackedStringArray("sprite")]
+scale = Vector2(0.4, 1.6)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_bufa8")
+sprite = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1533279918]
+sprite_frames = SubResource("SpriteFrames_nqmc2")
+animation = &"warning"
+autoplay = "warning"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=696019160]
+shape = SubResource("RectangleShape2D_4gigt")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2073353201]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1210173502]
+shape = SubResource("RectangleShape2D_hiex7")
+
+[node name="Timers" type="Node" parent="." unique_id=109518888]
+
+[node name="DamageStartTimer" type="Timer" parent="Timers" unique_id=1263551530]
+wait_time = 0.5
+autostart = true
+
+[node name="SpikeLifetime" type="Timer" parent="Timers" unique_id=571899321]
+wait_time = 0.7
+autostart = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timers/DamageStartTimer" to="." method="_on_damage_start_timer_timeout"]
+[connection signal="timeout" from="Timers/SpikeLifetime" to="." method="_on_spike_lifetime_timeout"]

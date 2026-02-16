@@ -10,8 +10,10 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	move_and_slide()
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_lifetime_timeout() -> void:
 	$".".queue_free()
 
-func _on_lifetime_timeout() -> void:
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if is_instance_of(body, Player):
+		body.emit_signal("take_damage", 1)
 	$".".queue_free()
