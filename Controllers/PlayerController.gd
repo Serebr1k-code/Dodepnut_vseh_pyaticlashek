@@ -76,17 +76,24 @@ func _on_dash_length_timeout() -> void:
 
 func _on_inv_frames_timeout() -> void:
 	p.is_invincible = false
+	p.hitbox_collision.set_deferred("disabled", false)
+	p.sprite.modulate = Color(1, 1, 1, 1.0)
 
 
 func _on_player_take_damage(recieved_damage: int) -> void:
-	pass # ВЫ РАЗДОЛБАИ ПИШИТЕ КОД
-	p.is_invincible = true
-	p.inv_frames.start()
+	if not p.is_invincible:
+		p.Health -= recieved_damage
+		if p.Health <= 0:
+			get_tree().quit()
+		p.hud.update_health(p.Health)
+		p.is_invincible = true
+		p.inv_frames.start()
+		p.hitbox_collision.set_deferred("disabled", true)
+		p.sprite.modulate = Color(2, 2, 2, 0.7)
 
 
 func _on_dash_delay_timeout() -> void:
 	pass # Replace with function body.
-
 
 func _on_magic_animation_timeout() -> void:
 	var proj : Dictionary [int, Projectile] = {}

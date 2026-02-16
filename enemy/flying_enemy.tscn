@@ -22,7 +22,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_yy35i"]
 radius = 500.0
 
-[node name="FlyingEnemy" type="CharacterBody2D" unique_id=1897619288 groups=["Enemy"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_wb8dy"]
+radius = 14.0
+
+[node name="FlyingEnemy" type="CharacterBody2D" unique_id=1897619288 groups=["Enemy", "HaveHealth"]]
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_2mvqj")
@@ -42,7 +45,7 @@ animation = &"idle"
 [node name="Nav" type="NavigationAgent2D" parent="." unique_id=1021877463]
 path_postprocessing = 2
 avoidance_enabled = true
-max_speed = 1500.0
+max_speed = 100000.0
 debug_enabled = true
 
 [node name="FlyingEnemyController" type="Node" parent="." unique_id=879162464 node_paths=PackedStringArray("e", "m")]
@@ -85,27 +88,35 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AgroRange" unique_id=1541465356]
 shape = SubResource("CircleShape2D_yy35i")
 
-[node name="RageTimer" type="Timer" parent="." unique_id=902786553]
+[node name="Hitbox" type="Area2D" parent="." unique_id=979639872]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1020884932]
+shape = SubResource("CircleShape2D_wb8dy")
+
+[node name="Timers" type="Node" parent="." unique_id=1101095744]
+
+[node name="RageTimer" type="Timer" parent="Timers" unique_id=902786553]
 one_shot = true
 
-[node name="AttackSwap" type="Timer" parent="." unique_id=38015975]
+[node name="AttackSwap" type="Timer" parent="Timers" unique_id=38015975]
 wait_time = 5.0
 
-[node name="LiberalDelay" type="Timer" parent="." unique_id=1878986767]
+[node name="LiberalDelay" type="Timer" parent="Timers" unique_id=1878986767]
 wait_time = 0.7
 
-[node name="DashRepeatDelay" type="Timer" parent="." unique_id=2059903799]
+[node name="DashRepeatDelay" type="Timer" parent="Timers" unique_id=2059903799]
 wait_time = 0.5
 
-[node name="LiberalMoveDelay" type="Timer" parent="." unique_id=1868558503]
+[node name="LiberalMoveDelay" type="Timer" parent="Timers" unique_id=1868558503]
 wait_time = 0.5
 
 [connection signal="navigation_finished" from="Nav" to="FlyingEnemyStateMachine" method="_on_nav_navigation_finished"]
 [connection signal="velocity_computed" from="Nav" to="FlyingEnemyController" method="_on_nav_velocity_computed"]
 [connection signal="body_entered" from="AgroRange" to="FlyingEnemyStateMachine" method="_on_agro_range_body_entered"]
 [connection signal="body_exited" from="AgroRange" to="FlyingEnemyStateMachine" method="_on_agro_range_body_exited"]
-[connection signal="timeout" from="RageTimer" to="FlyingEnemyStateMachine" method="_on_rage_timer_timeout"]
-[connection signal="timeout" from="AttackSwap" to="FlyingEnemyStateMachine" method="_on_attack_swap_timeout"]
-[connection signal="timeout" from="LiberalDelay" to="FlyingEnemyStateMachine/LiberalFlyingEnemyState" method="_on_liberal_delay_timeout"]
-[connection signal="timeout" from="DashRepeatDelay" to="FlyingEnemyStateMachine/DashFlyingEnemyState" method="_on_dash_repeat_delay_timeout"]
-[connection signal="timeout" from="LiberalMoveDelay" to="FlyingEnemyStateMachine/LiberalFlyingEnemyState" method="_on_liberal_move_delay_timeout"]
+[connection signal="area_entered" from="Hitbox" to="FlyingEnemyController" method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="Timers/RageTimer" to="FlyingEnemyStateMachine" method="_on_rage_timer_timeout"]
+[connection signal="timeout" from="Timers/AttackSwap" to="FlyingEnemyStateMachine" method="_on_attack_swap_timeout"]
+[connection signal="timeout" from="Timers/LiberalDelay" to="FlyingEnemyStateMachine/LiberalFlyingEnemyState" method="_on_liberal_delay_timeout"]
+[connection signal="timeout" from="Timers/DashRepeatDelay" to="FlyingEnemyStateMachine/DashFlyingEnemyState" method="_on_dash_repeat_delay_timeout"]
+[connection signal="timeout" from="Timers/LiberalMoveDelay" to="FlyingEnemyStateMachine/LiberalFlyingEnemyState" method="_on_liberal_move_delay_timeout"]

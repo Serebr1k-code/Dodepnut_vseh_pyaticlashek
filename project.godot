@@ -33,6 +33,7 @@ folder_colors={
 
 Player=""
 Enemy=""
+HaveHealth=""
 
 [input]
 

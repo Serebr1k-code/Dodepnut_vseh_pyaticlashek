@@ -17,6 +17,12 @@ signal take_damage(recieved_damage : int)
 @onready var dash_delay : Timer = $Timers/DashDelay
 @onready var magic_anim : Timer = $Timers/MagicAnimation
 @onready var spell_pos : Marker2D = $SpellPos
+@onready var slash: Area2D = $Slash
+@onready var slash1: CollisionPolygon2D = $Slash/Slash1
+@onready var slash2: CollisionPolygon2D = $Slash/Slash2
+@onready var hud: Hud = $"../Hud"
+@onready var hitbox_collision: CollisionShape2D = $Hitbox/CollisionShape2D
+@onready var hitbox: Area2D = $Hitbox
 
 # consts
 const G := Vector2(0, 980)

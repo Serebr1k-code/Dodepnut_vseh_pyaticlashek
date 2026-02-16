@@ -8,15 +8,17 @@ signal take_damage(recieved_damage: int)
 @onready var nav_agent: NavigationAgent2D = $Nav
 @onready var agro_range: Area2D = $AgroRange
 @onready var agro_collision: CollisionShape2D = $AgroRange/CollisionShape2D
-@onready var rage_timer: Timer = $RageTimer
-@onready var attack_swap: Timer = $AttackSwap
-@onready var liberal_delay: Timer = $LiberalDelay
-@onready var dash_repeat_delay: Timer = $DashRepeatDelay
-@onready var liberal_move_delay: Timer = $LiberalMoveDelay
+@onready var rage_timer: Timer = $Timers/RageTimer
+@onready var attack_swap: Timer = $Timers/AttackSwap
+@onready var liberal_delay: Timer = $Timers/LiberalDelay
+@onready var dash_repeat_delay: Timer = $Timers/DashRepeatDelay
+@onready var liberal_move_delay: Timer = $Timers/LiberalMoveDelay
+@onready var hitbox: Area2D = $Hitbox
 
 @export_category("Stats")
 @export var health := 15
-@export var damage := 1
+@export var contact_damage := 1
+@export var proj_damage := 1
 @export var SPEED := 200
 @export var agro_radius := 500
 @export var forgive_time := 1.0

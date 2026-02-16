@@ -567,7 +567,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=805297375 groups=["Player"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kb6p2"]
+size = Vector2(13, 21)
+
+[node name="Player" type="CharacterBody2D" unique_id=805297375 groups=["HaveHealth", "Player"]]
 scale = Vector2(2, 2)
 script = ExtResource("1_fjrip")
 
@@ -578,7 +581,8 @@ shape = SubResource("RectangleShape2D_ebec5")
 z_index = 1
 position = Vector2(0.5, -5.5)
 sprite_frames = SubResource("SpriteFrames_e7oew")
-animation = &"idle"
+animation = &"attack1"
+frame = 8
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1337940904]
 position_smoothing_enabled = true
@@ -595,7 +599,6 @@ metadata/_custom_type_script = "uid://bguayw2envskl"
 [node name="Timers" type="Node" parent="." unique_id=253110319]
 
 [node name="InvFrames" type="Timer" parent="Timers" unique_id=4056854]
-wait_time = 0.5
 one_shot = true
 
 [node name="DashLength" type="Timer" parent="Timers" unique_id=1585941109]
@@ -646,6 +649,21 @@ metadata/_custom_type_script = "uid://biqq0o57cpguo"
 
 [node name="SpellPos" type="Marker2D" parent="." unique_id=58253117]
 position = Vector2(14.5, -8.5)
+
+[node name="Slash" type="Area2D" parent="." unique_id=119869883]
+
+[node name="Slash1" type="CollisionPolygon2D" parent="Slash" unique_id=1830719547]
+polygon = PackedVector2Array(-4.5, -8.5, 12.5, -8.5, 23.5, -5.5, 28.5, -2.5, 30.5, 0.5, 30.5, 4.5, 28.5, 7.5, 23.5, 10.5, 12.5, 13.5, -4.5, 13.5, -15.5, 10.5, -20.5, 7.5, -22.5, 4.5, -22.5, 0.5, -20.5, -2.5, -15.5, -5.5)
+disabled = true
+
+[node name="Slash2" type="CollisionPolygon2D" parent="Slash" unique_id=1106861557]
+polygon = PackedVector2Array(-20.5, 2.5, -18.5, 2.5, -3.5, -1.5, 4.5, -1.5, 5.5, 3.5, 1.5, 4.5, 0.5, 5.5, 0.5, 7.5, 1.5, 8.5, 11.5, 10.5, 20.5, 10.5, 21.5, 7.5, 21.5, -0.5, 18.5, -7.5, 15.5, -11.5, 9.5, -15.5, 4.5, -17.5, -3.5, -17.5, -10.5, -14.5, -15.5, -10.5, -19.5, -3.5)
+disabled = true
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1977485117 groups=["HaveHealth", "Player"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=2082901538]
+shape = SubResource("RectangleShape2D_kb6p2")
 
 [connection signal="take_damage" from="." to="PlayerController" method="_on_player_take_damage"]
 [connection signal="timeout" from="Timers/InvFrames" to="PlayerController" method="_on_inv_frames_timeout"]
