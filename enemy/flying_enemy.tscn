@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://d3lxapmo4mx2m"]
+
+[ext_resource type="Script" uid="uid://c47rg10iymatk" path="res://enemy/flying_enemy.gd" id="1_2mvqj"]
+[ext_resource type="Script" uid="uid://mbf5ub1jit62" path="res://Controllers/FlyingEnemyController.gd" id="2_ofsxj"]
+[ext_resource type="Texture2D" uid="uid://ct66dh54bwspu" path="res://icon.svg" id="2_ppra6"]
+[ext_resource type="Script" uid="uid://csr526cahxls6" path="res://StateMachines/Enemy/FlyingEnemyStateMachine.gd" id="4_kbmdj"]
+[ext_resource type="Script" uid="uid://mqid3hgtqt8s" path="res://StateMachines/Enemy/DashFlyingEnemyState.gd" id="5_yy35i"]
+[ext_resource type="Script" uid="uid://dk822sgf7v3qs" path="res://StateMachines/Enemy/IdleFlyingEnemyState.gd" id="6_wb8dy"]
+[ext_resource type="Script" uid="uid://b3k6ta5wspajg" path="res://StateMachines/Enemy/LiberalFlyingEnemyState.gd" id="7_4loue"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fm2vn"]
+radius = 13.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wjonb"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yy35i"]
+radius = 500.0
+
+[node name="FlyingEnemy" type="CharacterBody2D" unique_id=1897619288 groups=["Enemy"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_2mvqj")
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=260770883]
+position = Vector2(2.3841858e-07, 4.4703484e-07)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_ppra6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1479229121]
+shape = SubResource("CircleShape2D_fm2vn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1608910761]
+sprite_frames = SubResource("SpriteFrames_wjonb")
+animation = &"idle"
+
+[node name="Nav" type="NavigationAgent2D" parent="." unique_id=1021877463]
+path_postprocessing = 2
+avoidance_enabled = true
+max_speed = 1500.0
+debug_enabled = true
+
+[node name="FlyingEnemyController" type="Node" parent="." unique_id=879162464 node_paths=PackedStringArray("e", "m")]
+script = ExtResource("2_ofsxj")
+e = NodePath("..")
+m = NodePath("../FlyingEnemyStateMachine")
+metadata/_custom_type_script = "uid://mbf5ub1jit62"
+
+[node name="FlyingEnemyStateMachine" type="Node" parent="." unique_id=977466816 node_paths=PackedStringArray("e", "init_state")]
+script = ExtResource("4_kbmdj")
+e = NodePath("..")
+init_state = NodePath("IdleFlyingEnemyState")
+metadata/_custom_type_script = "uid://csr526cahxls6"
+
+[node name="DashFlyingEnemyState" type="Node" parent="FlyingEnemyStateMachine" unique_id=2022114563 node_paths=PackedStringArray("e", "c", "state_machine")]
+script = ExtResource("5_yy35i")
+e = NodePath("../..")
+c = NodePath("../../FlyingEnemyController")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://mqid3hgtqt8s"
+
+[node name="IdleFlyingEnemyState" type="Node" parent="FlyingEnemyStateMachine" unique_id=465822845 node_paths=PackedStringArray("e", "c", "state_machine")]
+script = ExtResource("6_wb8dy")
+e = NodePath("../..")
+c = NodePath("../../FlyingEnemyController")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://dk822sgf7v3qs"
+
+[node name="LiberalFlyingEnemyState" type="Node" parent="FlyingEnemyStateMachine" unique_id=1400754602 node_paths=PackedStringArray("e", "c", "state_machine")]
+script = ExtResource("7_4loue")
+e = NodePath("../..")
+c = NodePath("../../FlyingEnemyController")
+state_machine = NodePath("..")
+metadata/_custom_type_script = "uid://b3k6ta5wspajg"
+
+[node name="AgroRange" type="Area2D" parent="." unique_id=792457500]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AgroRange" unique_id=1541465356]
+shape = SubResource("CircleShape2D_yy35i")
+
+[node name="RageTimer" type="Timer" parent="." unique_id=902786553]
+one_shot = true
+
+[node name="AttackSwap" type="Timer" parent="." unique_id=38015975]
+wait_time = 5.0
+
+[node name="LiberalDelay" type="Timer" parent="." unique_id=1878986767]
+wait_time = 0.7
+
+[node name="DashRepeatDelay" type="Timer" parent="." unique_id=2059903799]
+wait_time = 0.5
+
+[node name="LiberalMoveDelay" type="Timer" parent="." unique_id=1868558503]
+wait_time = 0.5
+
+[connection signal="navigation_finished" from="Nav" to="FlyingEnemyStateMachine" method="_on_nav_navigation_finished"]
+[connection signal="velocity_computed" from="Nav" to="FlyingEnemyController" method="_on_nav_velocity_computed"]
+[connection signal="body_entered" from="AgroRange" to="FlyingEnemyStateMachine" method="_on_agro_range_body_entered"]
+[connection signal="body_exited" from="AgroRange" to="FlyingEnemyStateMachine" method="_on_agro_range_body_exited"]
+[connection signal="timeout" from="RageTimer" to="FlyingEnemyStateMachine" method="_on_rage_timer_timeout"]
+[connection signal="timeout" from="AttackSwap" to="FlyingEnemyStateMachine" method="_on_attack_swap_timeout"]
+[connection signal="timeout" from="LiberalDelay" to="FlyingEnemyStateMachine/LiberalFlyingEnemyState" method="_on_liberal_delay_timeout"]
+[connection signal="timeout" from="DashRepeatDelay" to="FlyingEnemyStateMachine/DashFlyingEnemyState" method="_on_dash_repeat_delay_timeout"]
+[connection signal="timeout" from="LiberalMoveDelay" to="FlyingEnemyStateMachine/LiberalFlyingEnemyState" method="_on_liberal_move_delay_timeout"]

@@ -567,7 +567,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=805297375]
+[node name="Player" type="CharacterBody2D" unique_id=805297375 groups=["Player"]]
 scale = Vector2(2, 2)
 script = ExtResource("1_fjrip")
 

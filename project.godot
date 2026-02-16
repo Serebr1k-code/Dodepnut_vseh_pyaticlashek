@@ -29,6 +29,11 @@ folder_colors={
 "res://StateMachines/Player/": "red"
 }
 
+[global_group]
+
+Player=""
+Enemy=""
+
 [input]
 
 Left={

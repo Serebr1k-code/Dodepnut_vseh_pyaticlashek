@@ -20,13 +20,11 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 
-	# Simulate physics
 	p.move_and_slide()
 
 func handle_physics(delta: float):
 	# Add the gravity
-	if not p.is_on_floor() or not p.dashing:
-		p.velocity += p.G * delta
+	p.velocity += p.G * delta
 	
 	# Controlable jump height
 	if p.jumping and Input.is_action_just_released("Jump"):
