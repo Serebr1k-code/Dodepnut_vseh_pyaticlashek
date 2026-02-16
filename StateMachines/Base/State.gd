@@ -2,13 +2,15 @@ class_name State extends Node
 
 @export var state_machine: StateMachine
 
-func enter():
+func enter(): # вызывается при входе в это состояние
 	pass
 
-func exit():
+func exit(): # вызывается при выходе из этого состояния
 	pass
 
-func update_input(event: InputEvent):
+# все update функции это просто process но они нужны так как они разные у разных состояний
+
+func update_input(event: InputEvent): 
 	pass
 
 func update(delta: float):
