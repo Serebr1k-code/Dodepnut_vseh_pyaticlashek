@@ -7,6 +7,7 @@ signal take_damage(recieved_damage: int)
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var nav_agent: NavigationAgent2D = $Nav
 @onready var agro_range: Area2D = $AgroRange
+@onready var agro_collision: CollisionShape2D = $AgroRange/CollisionShape2D
 @onready var rage_timer: Timer = $RageTimer
 @onready var attack_swap: Timer = $AttackSwap
 @onready var liberal_delay: Timer = $LiberalDelay
@@ -17,6 +18,8 @@ signal take_damage(recieved_damage: int)
 @export var health := 15
 @export var damage := 1
 @export var SPEED := 200
+@export var agro_radius := 500
+@export var forgive_time := 1.0
 @export_category("Attacks")
 @export var dash_frec := 0.3
 @export var attack_swap_delay := 5.0
@@ -41,3 +44,5 @@ func _ready() -> void:
 	liberal_delay.wait_time = proj_delay
 	dash_repeat_delay.wait_time = dash_delay
 	liberal_move_delay.wait_time = move_delay
+	agro_collision.shape.radius = agro_radius
+	rage_timer.wait_time = forgive_time
