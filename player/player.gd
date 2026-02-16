@@ -18,11 +18,13 @@ signal take_damage(recieved_damage : int)
 @onready var magic_anim : Timer = $Timers/MagicAnimation
 @onready var spell_pos : Marker2D = $SpellPos
 @onready var slash: Area2D = $Slash
-@onready var slash1: CollisionPolygon2D = $Slash/Slash1
-@onready var slash2: CollisionPolygon2D = $Slash/Slash2
+@onready var slash1: CollisionPolygon2D = $Slash/Slash1 # колизии атак
+@onready var slash2: CollisionPolygon2D = $Slash/Slash2 # вкл/выкл через slash2.set_deffered("disabled", true/false)
 @onready var hud: Hud = $"../Hud"
 @onready var hitbox_collision: CollisionShape2D = $Hitbox/CollisionShape2D
 @onready var hitbox: Area2D = $Hitbox
+@onready var dash_reload: CPUParticles2D = $Particles/DashReload
+@onready var shade_dash_delay: Timer = $Timers/ShadeDashDelay
 
 # consts
 const G := Vector2(0, 980)
@@ -34,12 +36,13 @@ const G := Vector2(0, 980)
 @export var maxHealth := 5
 @export var Damage := 5
 @export_category("Abilities")
-@export var have_dash := false
+@export var have_dash := false # Забил пока что так как не надо
 
 # canSmth vars
 var canAttack := true
 var canDash := true
 var canCast := true
+var can_shade_dash := true
 
 # doing smth vars
 var jumping := false

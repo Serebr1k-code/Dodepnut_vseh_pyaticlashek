@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cgiihvxt73lhq" path="res://resources/player/Magic.png" id="11_32hag"]
 [ext_resource type="Texture2D" uid="uid://8elee2sikpqa" path="res://resources/player/run.png" id="12_tqiix"]
 [ext_resource type="Script" uid="uid://biqq0o57cpguo" path="res://StateMachines/Player/CastPlayerState.gd" id="14_kb6p2"]
+[ext_resource type="Texture2D" uid="uid://dooueihammq37" path="res://resources/player/ball.png" id="15_wodsf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ebec5"]
 size = Vector2(13, 21)
@@ -570,6 +571,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kb6p2"]
 size = Vector2(13, 21)
 
+[sub_resource type="Gradient" id="Gradient_32hag"]
+offsets = PackedFloat32Array(0, 0.3817734, 0.67241377, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.09019608, 0.1254902, 0.21960784, 1, 0.09019608, 0.1254902, 0.21960784, 1, 1, 1, 1, 0)
+
 [node name="Player" type="CharacterBody2D" unique_id=805297375 groups=["HaveHealth", "Player"]]
 scale = Vector2(2, 2)
 script = ExtResource("1_fjrip")
@@ -581,8 +586,8 @@ shape = SubResource("RectangleShape2D_ebec5")
 z_index = 1
 position = Vector2(0.5, -5.5)
 sprite_frames = SubResource("SpriteFrames_e7oew")
-animation = &"attack1"
-frame = 8
+animation = &"attack2"
+frame = 2
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1337940904]
 position_smoothing_enabled = true
@@ -611,6 +616,9 @@ one_shot = true
 
 [node name="MagicAnimation" type="Timer" parent="Timers" unique_id=1458404943]
 wait_time = 2.6
+one_shot = true
+
+[node name="ShadeDashDelay" type="Timer" parent="Timers" unique_id=1399245161]
 one_shot = true
 
 [node name="PlayerStateMachine" type="Node" parent="." unique_id=277760612 node_paths=PackedStringArray("p", "init_state")]
@@ -665,8 +673,26 @@ disabled = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=2082901538]
 shape = SubResource("RectangleShape2D_kb6p2")
 
+[node name="Particles" type="Node2D" parent="." unique_id=1439412558]
+
+[node name="DashReload" type="CPUParticles2D" parent="Particles" unique_id=1243741915]
+emitting = false
+texture = ExtResource("15_wodsf")
+lifetime = 0.05
+one_shot = true
+speed_scale = 0.25
+local_coords = true
+emission_shape = 1
+emission_sphere_radius = 16.0
+direction = Vector2(0, 0)
+gravity = Vector2(0, 0)
+orbit_velocity_min = -1.0
+color = Color(0.09019608, 0.1254902, 0.21960784, 1)
+color_ramp = SubResource("Gradient_32hag")
+
 [connection signal="take_damage" from="." to="PlayerController" method="_on_player_take_damage"]
 [connection signal="timeout" from="Timers/InvFrames" to="PlayerController" method="_on_inv_frames_timeout"]
 [connection signal="timeout" from="Timers/DashLength" to="PlayerController" method="_on_dash_length_timeout"]
 [connection signal="timeout" from="Timers/DashDelay" to="PlayerController" method="_on_dash_delay_timeout"]
 [connection signal="timeout" from="Timers/MagicAnimation" to="PlayerController" method="_on_magic_animation_timeout"]
+[connection signal="timeout" from="Timers/ShadeDashDelay" to="PlayerController" method="_on_shade_dash_delay_timeout"]

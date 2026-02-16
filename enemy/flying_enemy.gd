@@ -41,7 +41,7 @@ signal take_damage(recieved_damage: int)
 var target
 var proj_start_ang := proj_ang*(proj_count-1)/(-2.0)
 
-func _ready() -> void:
+func _ready() -> void: # задаем данные из конфига
 	attack_swap.wait_time = attack_swap_delay
 	liberal_delay.wait_time = proj_delay
 	dash_repeat_delay.wait_time = dash_delay

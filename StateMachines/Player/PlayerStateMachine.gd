@@ -7,7 +7,7 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	current_state.update(delta)
-	
+	# определяем состряния
 	if current_state.name == "cast":
 		pass
 	elif !p.is_on_floor():

@@ -13,14 +13,14 @@ func _on_agro_range_body_entered(body: Node2D) -> void:
 		e.rage_timer.stop()
 		e.target = body
 		if e.target and current_state.name == "idle":
-			var rando = randf()
+			var rando = randf() # рандомим атаки по долям
 			if rando <= e.dash_frec:
 				change_state("dash")
 			else:
 				change_state("liberal")
 
 func _on_rage_timer_timeout() -> void:
-	change_state("idle")
+	change_state("idle") # Враг разагрился
 	e.target = 0
 
 func _on_nav_navigation_finished() -> void:
@@ -28,9 +28,9 @@ func _on_nav_navigation_finished() -> void:
 
 
 func _on_agro_range_body_exited(body: Node2D) -> void:
-	e.rage_timer.start()
+	e.rage_timer.start() # враг некоторое время всё ещё преследует игрока и только потом прощает
 
-
+# рандомим атаки раз в 5 сек(можно менять в конфиге)
 func _on_attack_swap_timeout() -> void:
 	if e.target:
 			var rando = randf()

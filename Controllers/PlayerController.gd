@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 
 	p.move_and_slide()
 
-func handle_physics(delta: float):
+func handle_physics(delta: float) -> void:
 	# Add the gravity
 	p.velocity += p.G * delta
 	
@@ -31,7 +31,7 @@ func handle_physics(delta: float):
 		p.velocity.y = 0
 		p.move_and_slide()
 
-func handle_input():
+func handle_input() -> void:
 	# Get move input
 	p.raw_dir = Vector2(Input.get_axis("Left", "Right"), Input.get_axis("Up", "Down"))
 	p.move_dir = p.raw_dir.x
@@ -44,12 +44,18 @@ func handle_input():
 		p.dashing = true
 		p.canDash = false
 		p.dash_length.start()
+		if p.can_shade_dash:
+			p.can_shade_dash = false
+			p.shade_dash_delay.start()
+			p.is_invincible = true
+			p.hitbox_collision.set_deferred("disabled", true)
+			p.sprite.modulate = Color(0.2, 0.2, 0.2, 1)
 	
 	# Get cast spell input
 	if Input.is_action_just_pressed("Spell") and p.canCast and not p.casting:
 		m.change_state("cast")
 
-func handle_movement():
+func handle_movement() -> void:
 	# Move player left and right
 	if not p.dashing:
 		p.sprite.flip_h = p.last_dir == -1
@@ -65,7 +71,7 @@ func handle_movement():
 		p.velocity.x = p.last_dir * p.SPEED * 3
 		p.velocity.y = 0.0
 
-func handle_jump():
+func handle_jump() -> void:
 	# Handle jump
 	if Input.is_action_just_pressed("Jump"):
 		p.velocity.y = p.JUMP_VELOCITY
@@ -73,13 +79,18 @@ func handle_jump():
 func _on_dash_length_timeout() -> void:
 	p.dashing = false
 	p.dash_delay.start()
+	if p.is_invincible and p.inv_frames.is_stopped(): # если шейд деш то неуязв
+		p.is_invincible = false
+		p.hitbox_collision.set_deferred("disabled", false)
+		p.sprite.modulate = Color(1, 1, 1, 1.0)
 
+# выход из неуязва
 func _on_inv_frames_timeout() -> void:
 	p.is_invincible = false
 	p.hitbox_collision.set_deferred("disabled", false)
 	p.sprite.modulate = Color(1, 1, 1, 1.0)
 
-
+# Урон
 func _on_player_take_damage(recieved_damage: int) -> void:
 	if not p.is_invincible:
 		p.Health -= recieved_damage
@@ -89,12 +100,13 @@ func _on_player_take_damage(recieved_damage: int) -> void:
 		p.is_invincible = true
 		p.inv_frames.start()
 		p.hitbox_collision.set_deferred("disabled", true)
-		p.sprite.modulate = Color(2, 2, 2, 0.7)
+		p.sprite.modulate = Color(2, 2, 2, 1)
 
-
+# Хз зачем это здесь
 func _on_dash_delay_timeout() -> void:
-	pass # Replace with function body.
+	pass
 
+# там короче чтобы анимация магии была, есть таймер, и вот в его конце я спавню проджектайлы
 func _on_magic_animation_timeout() -> void:
 	var proj : Dictionary [int, Projectile] = {}
 	for i in range(0, 1):
@@ -104,3 +116,12 @@ func _on_magic_animation_timeout() -> void:
 	for i in range(0, 1):
 		p.get_parent().add_child(proj[i])
 	m.change_state("idle")
+
+# вот эту штуку надо написать
+func handle_melee_attacks() -> void:
+	pass
+
+# перезарядка шейд деша
+func _on_shade_dash_delay_timeout() -> void:
+	p.dash_reload.emitting = true
+	p.can_shade_dash = true

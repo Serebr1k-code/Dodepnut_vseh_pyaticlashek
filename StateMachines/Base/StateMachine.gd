@@ -8,6 +8,7 @@ var states: Dictionary [String, State] = {
 	
 }
 
+# добавляем всех детей в стейты
 func _ready() -> void:
 	for child in get_children():
 		if child is State:
@@ -16,7 +17,7 @@ func _ready() -> void:
 	if init_state:
 		current_state = init_state
 		init_state.enter()
-
+# 3 функции ниже как раз чтобы обновлять update
 func _input(event: InputEvent) -> void:
 	current_state.update_input(event)
 
@@ -37,6 +38,7 @@ func change_state(new_state_name: String):
 	
 	current_state.enter()
 
+# по факту это не надо но мне пока что лень переделывать
 func reenter_state():
 	current_state.exit()
 	current_state.enter()
