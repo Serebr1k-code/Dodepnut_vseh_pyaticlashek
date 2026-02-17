@@ -11,7 +11,8 @@ signal take_damage(recieved_damage : int)
 # Links to childs
 @onready var camera : Camera2D = $Camera2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
-@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite : AnimatedSprite2D = $Sprite
+@onready var sword : AnimatedSprite2D = $Sword
 @onready var inv_frames : Timer = $Timers/InvFrames
 @onready var dash_length : Timer = $Timers/DashLength
 @onready var dash_delay : Timer = $Timers/DashDelay

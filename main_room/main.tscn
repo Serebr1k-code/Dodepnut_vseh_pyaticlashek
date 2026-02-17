@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://buxe3aslh20sa" path="res://player/player.tscn" id="1_ymuff"]
 [ext_resource type="Texture2D" uid="uid://30ryuh65wcrg" path="res://resources/ground.png" id="2_6cqfu"]
 [ext_resource type="PackedScene" uid="uid://dxcxgu5koeh62" path="res://player/hud.tscn" id="3_6cqfu"]
-[ext_resource type="PackedScene" uid="uid://d3lxapmo4mx2m" path="res://enemy/flying_enemy.tscn" id="4_ldbvv"]
 [ext_resource type="PackedScene" uid="uid://dws56saqrvhe3" path="res://boss/boss.tscn" id="6_gpn76"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ldbvv"]
@@ -277,9 +276,6 @@ affect_navigation_mesh = true
 [node name="NavigationObstacle2D8" type="NavigationObstacle2D" parent="NavigationRegion2D" unique_id=63043066]
 vertices = PackedVector2Array(-1152, -435, -1152, 32, -1088, 32, -1088, 64, -1056, 64, -1056, 96, -160, 96, -160, 64, -128, 64, -128, 32, 128, 32, 128, 64, 160, 64, 160, 96, 1056, 96, 1056, 64, 1088, 64, 1088, 32, 1152, 32, 1152, -434, 1237, -476, 1245, 221, -1311, 243, -1301, -518, -1223, -1901, 1191, -1794, 1237, -476, 1152, -434, 1152, -1760, -1152, -1760)
 affect_navigation_mesh = true
-
-[node name="FlyingEnemy" parent="." unique_id=1897619288 instance=ExtResource("4_ldbvv")]
-position = Vector2(-635, -263)
 
 [node name="Boss" parent="." unique_id=1756071142 instance=ExtResource("6_gpn76")]
 position = Vector2(0, -200)
