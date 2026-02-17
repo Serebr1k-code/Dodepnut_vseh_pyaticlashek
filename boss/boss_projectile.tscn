@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://c3uymt0pkn7su"]
+
+[ext_resource type="Texture2D" uid="uid://ct66dh54bwspu" path="res://icon.svg" id="1_1grgd"]
+[ext_resource type="Script" uid="uid://bh1pgixqh5f58" path="res://boss/BossProjectile.gd" id="1_me1h0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_me1h0"]
+radius = 61.111115
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_witol"]
+radius = 20.0
+
+[node name="BossProjectile" type="CharacterBody2D" unique_id=391545446]
+scale = Vector2(0.6, 0.6)
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_me1h0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1208821945]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_1grgd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1655617292]
+scale = Vector2(0.3, 0.3)
+shape = SubResource("CircleShape2D_me1h0")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1839950007]
+
+[node name="CollisionShape2DA" type="CollisionShape2D" parent="Area2D" unique_id=957792671]
+shape = SubResource("CircleShape2D_witol")
+
+[node name="Lifetime" type="Timer" parent="." unique_id=1588531650]
+wait_time = 2.0
+autostart = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]
