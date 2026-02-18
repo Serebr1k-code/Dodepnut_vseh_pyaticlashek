@@ -37,55 +37,40 @@ sprite_frames = SubResource("SpriteFrames_yy71b")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="BossController" type="Node" parent="." unique_id=1611623940 node_paths=PackedStringArray("boss", "boss_sprite")]
+[node name="BossController" type="Node" parent="." unique_id=1611623940 node_paths=PackedStringArray("b")]
 script = ExtResource("3_yy71b")
-boss = NodePath("..")
-boss_sprite = NodePath("../AnimatedSprite2D")
+b = NodePath("..")
 
-[node name="BossStateMachine" type="Node" parent="." unique_id=256145935 node_paths=PackedStringArray("boss", "bossController", "init_state")]
+[node name="BossStateMachine" type="Node" parent="." unique_id=256145935 node_paths=PackedStringArray("b", "c", "init_state")]
 script = ExtResource("4_270ai")
-boss = NodePath("..")
-bossController = NodePath("../BossController")
+b = NodePath("..")
+c = NodePath("../BossController")
 init_state = NodePath("IdleBossState")
 
-[node name="IdleBossState" type="Node" parent="BossStateMachine" unique_id=1867310562 node_paths=PackedStringArray("p", "c", "state_machine")]
+[node name="IdleBossState" type="Node" parent="BossStateMachine" unique_id=1867310562 node_paths=PackedStringArray("b", "c", "state_machine")]
 script = ExtResource("5_hcu6l")
-p = NodePath("../..")
+b = NodePath("../..")
 c = NodePath("../../BossController")
 state_machine = NodePath("..")
 metadata/_custom_type_script = "uid://dhuerabl0dl6h"
 
-[node name="Attack1BossState" type="Node" parent="BossStateMachine" unique_id=2114991180 node_paths=PackedStringArray("p", "c", "state_machine")]
+[node name="Attack1BossState" type="Node" parent="BossStateMachine" unique_id=2114991180 node_paths=PackedStringArray("b", "c", "state_machine")]
 script = ExtResource("6_ti23b")
-p = NodePath("../..")
+b = NodePath("../..")
 c = NodePath("../../BossController")
-default_attack_count = 40
-projectile_count = 12
-projectile_spawn_distance = 50
-attack_rotation = 2
 state_machine = NodePath("..")
 metadata/_custom_type_script = "uid://dhuerabl0dl6h"
 
-[node name="Attack2BossState" type="Node" parent="BossStateMachine" unique_id=1421326901 node_paths=PackedStringArray("boss", "c", "state_machine")]
+[node name="Attack2BossState" type="Node" parent="BossStateMachine" unique_id=1421326901 node_paths=PackedStringArray("b", "c", "state_machine")]
 script = ExtResource("7_glpsb")
-boss = NodePath("../..")
+b = NodePath("../..")
 c = NodePath("../../BossController")
-default_attack_count = 6
-projectile_count = 60
-projectile_spawn_distance = 50
-attack_rotation = 3
-hole_size = 45
-max_hole_step = 30
-projectile_speed = 380
 state_machine = NodePath("..")
 
-[node name="Attack3BossState" type="Node" parent="BossStateMachine" unique_id=2131275887 node_paths=PackedStringArray("boss", "controller", "state_machine")]
+[node name="Attack3BossState" type="Node" parent="BossStateMachine" unique_id=2131275887 node_paths=PackedStringArray("b", "c", "state_machine")]
 script = ExtResource("8_205ta")
-boss = NodePath("../..")
-controller = NodePath("../../BossController")
-default_attack_count = 4
-spike_spawn_distance = 150
-spike_count = 40
+b = NodePath("../..")
+c = NodePath("../../BossController")
 state_machine = NodePath("..")
 
 [node name="Timers" type="Node" parent="." unique_id=2006223029]
@@ -98,7 +83,7 @@ autostart = true
 wait_time = 0.1
 
 [node name="Attack2Delay" type="Timer" parent="Timers" unique_id=2002545932]
-wait_time = 1.0999999999999999
+wait_time = 1.1
 
 [node name="Attack3Delay" type="Timer" parent="Timers" unique_id=2138823074]
 wait_time = 0.85

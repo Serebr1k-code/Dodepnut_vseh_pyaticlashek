@@ -28,7 +28,7 @@ func _on_nav_navigation_finished() -> void:
 
 
 func _on_agro_range_body_exited(body: Node2D) -> void:
-	e.rage_timer.start() # враг некоторое время всё ещё преследует игрока и только потом прощает
+	if e.rage_timer.is_inside_tree(): e.rage_timer.start() # враг некоторое время всё ещё преследует игрока и только потом прощает
 
 # рандомим атаки раз в 5 сек(можно менять в конфиге)
 func _on_attack_swap_timeout() -> void:

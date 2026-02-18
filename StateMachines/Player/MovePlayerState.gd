@@ -5,8 +5,14 @@ func _ready() -> void:
 
 func enter():
 	#if p.hud: p.hud.change_current_state(name)
-	if p.sprite and !p.dashing: p.sprite.play("run")
-	if p.sprite and p.dashing: p.sprite.play("dash")
+	if p.dashing:
+		p.sprite.play("dash")
+		p.sword.play("dash")
+		p.fx.play("dash")
+	else:
+		p.sprite.play("run")
+		p.sword.play("run")
+		p.fx.play("run")
 	p.canCast = true
 
 func exit():
@@ -18,9 +24,14 @@ func update_input(event: InputEvent):
 func update(delta: float):
 	if p.dashing:
 		p.sprite.play("dash")
+		p.sword.play("dash")
+		p.fx.play("dash")
 	else:
 		p.sprite.play("run")
+		p.sword.play("run")
+		p.fx.play("run")
 	c.handle_input()
+	c.handle_melee_attacks()
 
 func update_physics(delta: float):
 	c.handle_physics(delta)

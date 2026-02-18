@@ -17,3 +17,6 @@ func update_health(new_hp: int):
 			hps[i].play("Full")
 		else:
 			hps[i].play("Empty")
+
+func update_fly(fly_time: float):
+	$Fly.value = fly_time

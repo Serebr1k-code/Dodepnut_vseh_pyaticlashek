@@ -5,7 +5,10 @@ func _ready() -> void:
 
 func enter():
 	#if p.hud: p.hud.change_current_state(name)
-	if p.sprite: p.sprite.play("idle")
+	if p.sprite:
+		p.sprite.play("idle")
+		p.sword.play("idle")
+		p.fx.play("idle")
 	p.canCast = true
 
 func exit():
@@ -16,6 +19,7 @@ func update_input(event: InputEvent):
 
 func update(delta: float):
 	c.handle_input()
+	c.handle_melee_attacks()
 
 func update_physics(delta: float):
 	c.handle_physics(delta)

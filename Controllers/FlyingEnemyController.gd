@@ -50,3 +50,9 @@ func create_proj(ang: float):
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Player"):
 		area.get_parent().take_damage.emit(e.contact_damage)
+
+
+func _on_flying_enemy_take_damage(recieved_damage: int) -> void:
+	e.health -= recieved_damage
+	if e.health <= 0:
+		e.queue_free()

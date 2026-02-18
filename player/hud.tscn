@@ -175,3 +175,14 @@ position = Vector2(288, 32)
 sprite_frames = SubResource("SpriteFrames_pffjo")
 animation = &"Full"
 frame_progress = 0.04491737
+
+[node name="Fly" type="ProgressBar" parent="." unique_id=247564495]
+anchors_preset = -1
+anchor_right = 0.03
+anchor_bottom = 0.1
+offset_top = 64.0
+offset_right = 4.0
+offset_bottom = 91.0
+max_value = 3.0
+value = 3.0
+fill_mode = 3

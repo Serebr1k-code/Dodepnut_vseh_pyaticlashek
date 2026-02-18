@@ -5,10 +5,11 @@ func _ready() -> void:
 
 func enter():
 	#if p.hud: p.hud.change_current_state(name)
-	if p.sprite: p.sprite.play("magic")
+	p.sprite.play("magic")
+	p.sword.play("idle")
+	p.fx.play("idle")
 	p.canCast = false
 	p.casting = true
-	p.sprite.play("magic")
 	p.magic_anim.start()
 	p.velocity.x = 0
 

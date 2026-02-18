@@ -1,6 +1,6 @@
 class_name IdleBossState extends State
 
-@export var p: Boss
+@export var b: Boss
 @export var c: BossController
 
 func _ready() -> void:
@@ -17,7 +17,7 @@ func update_input(event: InputEvent):
 
 func update(delta: float):
 	pass
-	#p.betweenAttackTime.start()
+	#b.betweenAttackTime.start()
 
 func update_physics(delta: float):
 	pass

@@ -11,30 +11,39 @@ signal take_damage(recieved_damage : int)
 # Links to childs
 @onready var camera : Camera2D = $Camera2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
-@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite : AnimatedSprite2D = $Sprite
+@onready var sword : AnimatedSprite2D = $Sword
+@onready var fx : AnimatedSprite2D = $FX
 @onready var inv_frames : Timer = $Timers/InvFrames
 @onready var dash_length : Timer = $Timers/DashLength
 @onready var dash_delay : Timer = $Timers/DashDelay
 @onready var magic_anim : Timer = $Timers/MagicAnimation
 @onready var spell_pos : Marker2D = $SpellPos
-@onready var slash: Area2D = $Slash
-@onready var slash1: CollisionPolygon2D = $Slash/Slash1 # колизии атак
-@onready var slash2: CollisionPolygon2D = $Slash/Slash2 # вкл/выкл через slash2.set_deffered("disabled", true/false)
+@onready var slash: Slash = $Slash
 @onready var hud: Hud = $"../Hud"
 @onready var hitbox_collision: CollisionShape2D = $Hitbox/CollisionShape2D
 @onready var hitbox: Area2D = $Hitbox
 @onready var dash_reload: CPUParticles2D = $Particles/DashReload
+@onready var left_fly_particles : CPUParticles2D = $Particles/Left
+@onready var right_fly_particles : CPUParticles2D = $Particles/Right
 @onready var shade_dash_delay: Timer = $Timers/ShadeDashDelay
+@onready var attacks : Array[Timer] = [
+	$Timers/Attack1,
+	$Timers/Attack2,
+]
+@onready var combo : Timer = $Timers/Combo
 
 # consts
 const G := Vector2(0, 980)
 
 @export_category("Stats")
-@export var SPEED := 250.0
-@export var JUMP_VELOCITY := -600.0
+@export var SPEED := 350.0
+@export var JUMP_VELOCITY := -500.0
+@export var WINGS_VELOCITY := -500.0
 @export var Health := 5
 @export var maxHealth := 5
 @export var Damage := 5
+@export var max_fly_time := 3.0
 @export_category("Abilities")
 @export var have_dash := false # Забил пока что так как не надо
 
@@ -58,3 +67,6 @@ var is_invincible := false
 var raw_dir := Vector2.ZERO
 var move_dir := 0.0
 var last_dir := 1.0
+var next_attack := 0
+var combo_counter := 0.0
+var fly_time := max_fly_time
