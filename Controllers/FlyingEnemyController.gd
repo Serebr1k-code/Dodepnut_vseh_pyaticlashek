@@ -3,6 +3,14 @@ class_name FlyingEnemyController extends Node
 @export var e: FlyingEnemy
 @export var m: FlyingEnemyStateMachine
 
+enum DamageType {
+	Physical,
+	Fire,
+	Ice,
+	Poison,
+	Lightning
+}
+
 func _ready() -> void:
 	pass
 
@@ -52,8 +60,10 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 		area.get_parent().take_damage.emit(e.contact_damage)
 
 
-func _on_flying_enemy_take_damage(recieved_damage: int) -> void:
+func _on_flying_enemy_take_damage(recieved_damage: int, damage_type: Damage.Type) -> void:
 	if not e.is_invincible:
+		if damage_type == e.skill_issue:
+			recieved_damage *= 2
 		e.health -= recieved_damage
 		if e.health <= 0:
 			e.queue_free()

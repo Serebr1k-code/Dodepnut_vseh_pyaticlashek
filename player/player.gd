@@ -27,11 +27,9 @@ signal take_damage(recieved_damage : int)
 @onready var left_fly_particles : CPUParticles2D = $Particles/Left
 @onready var right_fly_particles : CPUParticles2D = $Particles/Right
 @onready var shade_dash_delay: Timer = $Timers/ShadeDashDelay
-@onready var attacks : Array[Timer] = [
-	$Timers/Attack1,
-	$Timers/Attack2,
-]
-@onready var combo : Timer = $Timers/Combo
+@onready var attack_timer: Timer =  $Timers/AttackTimer
+@onready var combo: Timer = $Timers/Combo
+@onready var swing_delay: Timer = $Timers/SwingDelay
 
 # consts
 const G := Vector2(0, 980)
@@ -42,16 +40,17 @@ const G := Vector2(0, 980)
 @export var WINGS_VELOCITY := -500.0
 @export var Health := 5
 @export var maxHealth := 5
-@export var Damage := 5
 @export var max_fly_time := 3.0
 @export_category("Abilities")
 @export var have_dash := false
-@export var cast_speed := 1.0
 @export_category("Projectiles")
 @export var proj_ang := deg_to_rad(10)
 @export var proj_speed := 600
 @export var proj_count := 2
-@export var proj_damage := 15
+@export var proj_damage := 5
+@export var cast_speed := 1.0
+@export_category("Attacks")
+@export var attack_settings: Array[AttackSettings]
 
 # canSmth vars
 var canAttack := true
@@ -76,6 +75,9 @@ var last_dir := 1.0
 var next_attack := 0
 var combo_counter := 0.0
 var fly_time := max_fly_time
+var target
+var current_damage := 5
+var current_damage_type : Damage.Type = Damage.Type.Physical
 
 func _ready() -> void:
 	magic_anim.wait_time = 2.6/cast_speed

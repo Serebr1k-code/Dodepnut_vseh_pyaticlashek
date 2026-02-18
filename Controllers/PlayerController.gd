@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 	if p.last_dir == -1:
 		p.slash.scale = Vector2(-1, 1)
 	else:
-		p.slash.scale = Vector2(1, 1)
+		p.slash.scale = Vector2.ONE
 	var combo_boost:float = 1.0 + p.combo_counter/10
 	p.slash.scale *= combo_boost
 	if p.attacking:
@@ -21,6 +21,12 @@ func _process(delta: float) -> void:
 	else:
 		p.fx.position = Vector2(0.5, -5.5)
 		p.fx.scale = Vector2.ONE
+	
+	# Ресет скорости атаки
+	if not p.attacking:
+		p.fx.speed_scale = 1
+		p.sword.speed_scale = 1
+
 	
 	# Quit game if player dies
 	if p.Health <= 0:
@@ -129,6 +135,8 @@ func _on_magic_animation_timeout() -> void:
 	for i in range(0, p.proj_count):
 		proj = p.projectile_scene.instantiate()
 		proj.fromPlayer = true
+		proj.followEnemies = true
+		proj.target = p.target
 		proj.damage = p.proj_damage
 		proj.position = p.spell_pos.global_position
 		proj.velocity = Vector2.from_angle(randf_range(-p.proj_ang, p.proj_ang)) * p.proj_speed
@@ -144,3 +152,8 @@ func handle_melee_attacks() -> void:
 func _on_shade_dash_delay_timeout() -> void:
 	p.dash_reload.emitting = true
 	p.can_shade_dash = true
+
+
+func _on_homing_range_body_entered(body: Node2D) -> void:
+	if not (body is Player) and body.is_in_group("HaveHealth"):
+		p.target = body

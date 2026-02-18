@@ -11,7 +11,6 @@ func _process(delta: float) -> void:
 func spawn_circle_of_projectiles(count: int, projectile_spawn_distance: int, center: Vector2, deg_shift: float):
 	for i in range(count):
 		var p = b.bossProjectile.instantiate()
-		get_parent().add_child(p) 
 
 		var x_multiplier = sin(deg_to_rad(i * (360 / count) + deg_shift))
 		var y_multiplier = cos(deg_to_rad(i * (360 / count) + deg_shift))
@@ -22,9 +21,16 @@ func spawn_circle_of_projectiles(count: int, projectile_spawn_distance: int, cen
 		)
 
 		p.velocity = Vector2(
-			x_multiplier * p.projectileSpeed,
-			y_multiplier * p.projectileSpeed
-		)
+			x_multiplier,
+			y_multiplier
+		) * b.projectile_speed1
+		
+		p.fromPlayer = false
+		p.damage = 0
+		#p.followEnemies = true
+		p.follow_power = 0.3
+		
+		get_parent().add_child(p) 
 		
 func spawn_circle_of_projectiles_with_hole(count: int, speed: int, projectile_spawn_distance: int, center: Vector2, deg_shift: float, be: float, le: float):
 	for i in range(count):
@@ -32,8 +38,11 @@ func spawn_circle_of_projectiles_with_hole(count: int, speed: int, projectile_sp
 		if (deg % 180 >= be and deg % 180 <= le): continue
 		
 		var p = b.bossProjectile.instantiate()
+		p.fromPlayer = false
+		p.followEnemies = true
+		p.follow_power = 0.01
 		get_parent().add_child(p) 
-		p.projectileSpeed = speed
+		b.projectile_speed2 = speed
 
 		var x_multiplier = sin(deg_to_rad(deg + deg_shift))
 		var y_multiplier = cos(deg_to_rad(deg + deg_shift))
@@ -44,8 +53,8 @@ func spawn_circle_of_projectiles_with_hole(count: int, speed: int, projectile_sp
 		)
 
 		p.velocity = Vector2(
-			x_multiplier * p.projectileSpeed,
-			y_multiplier * p.projectileSpeed
+			x_multiplier * b.projectile_speed2,
+			y_multiplier * b.projectile_speed2
 		)
 		
 func spawn_spike_row(start: Vector2, count: int, distance: int):

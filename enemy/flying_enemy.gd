@@ -1,6 +1,6 @@
 class_name FlyingEnemy extends CharacterBody2D
 
-signal take_damage(recieved_damage: int)
+signal take_damage(recieved_damage: int, damage_type: Damage.Type)
 
 @onready var projectile_scene = preload("res://player/projectile.tscn")
 
@@ -32,12 +32,21 @@ signal take_damage(recieved_damage: int)
 @export var proj_ang := deg_to_rad(30)
 @export var proj_delay := 0.7
 @export var move_delay := 0.5
-@export var height := 250
+@export var height := 200
 @export var height_rando := 50
 @export var left_right_rando := 200
 @export_category("Dash settings")
 @export var dash_speed_mult := 3
 @export var dash_delay := 0.5
+
+var damage_types: Array[Damage.Type] = [
+	Damage.Type.Physical,
+	Damage.Type.Fire,
+	Damage.Type.Ice,
+	Damage.Type.Poison,
+	Damage.Type.Lightning
+]
+var skill_issue := damage_types[randi_range(0, 4)]
 
 var target
 var proj_start_ang := proj_ang*(proj_count-1)/(-2.0)

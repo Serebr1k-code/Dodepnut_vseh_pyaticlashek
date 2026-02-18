@@ -6,10 +6,11 @@ func _ready() -> void:
 func enter():
 	#if p.hud: p.hud.change_current_state(name)
 	p.attacking = true
-	
-	p.sword.play("slash" + str(p.next_attack))
-	p.fx.play("slash" + str(p.next_attack))
-	p.attacks[p.next_attack].start()
+	p.canCast = false
+	if p.attack_settings[p.next_attack].delay <= 0.01:
+		enter_fr()
+	else:
+		p.swing_delay.start()
 
 func exit():
 	p.sprite.speed_scale = 1.0
@@ -47,28 +48,36 @@ func update_physics(delta: float):
 
 func _on_slash_body_entered(body: Node2D) -> void:
 	if body.is_in_group("HaveHealth") and not body is Player:
-		body.take_damage.emit(p.Damage)
+		body.take_damage.emit(p.current_damage, p.current_damage_type)
 	if body is Projectile:
 		body.queue_free()
-
-
-func _on_attack_1_timeout() -> void:
-	p.sword.play("idle")
-	p.fx.play("idle")
-	p.next_attack += 1
-	p.next_attack = p.next_attack % p.slash.slashes.size()
-	p.combo.start()
-
-
-func _on_attack_2_timeout() -> void:
-	p.sword.play("idle")
-	p.fx.play("idle")
-	p.next_attack += 1
-	p.next_attack = p.next_attack % p.slash.slashes.size()
-	p.combo.start()
-
 
 func _on_combo_timeout() -> void:
 	p.next_attack = 0
 	p.combo_counter = 0
 	state_machine.change_state("idle")
+
+
+func _on_attack_timer_timeout() -> void:
+	p.sword.play("idle")
+	p.fx.play("idle")
+	p.next_attack += 1
+	p.next_attack = p.next_attack % p.slash.slashes.size()
+	p.combo.start()
+
+
+func _on_swing_delay_timeout() -> void:
+	enter_fr()
+
+func enter_fr():
+	var target_anim := "slash" + str(p.next_attack)
+	p.sword.play(target_anim)
+	p.fx.play(target_anim)
+	p.fx.speed_scale = p.attack_settings[p.next_attack].speed_scale
+	p.sword.speed_scale = p.attack_settings[p.next_attack].speed_scale
+	p.current_damage = p.attack_settings[p.next_attack].damage
+	p.attack_timer.wait_time = p.fx.sprite_frames.get_frame_count(target_anim) \
+	/ p.fx.sprite_frames.get_animation_speed(target_anim) \
+	/ p.fx.speed_scale
+	p.current_damage_type = p.attack_settings[p.next_attack].damage_type
+	p.attack_timer.start()
