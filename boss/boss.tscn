@@ -23,9 +23,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Boss" type="CharacterBody2D" unique_id=1756071142]
-collision_layer = 0
-collision_mask = 0
+[node name="Boss" type="CharacterBody2D" unique_id=1756071142 groups=["Enemy", "HaveHealth"]]
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_nnfxe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1952875537]
@@ -89,6 +89,7 @@ wait_time = 1.1
 wait_time = 0.85
 
 [connection signal="attack_end" from="." to="BossStateMachine" method="_on_boss_attack_end"]
+[connection signal="take_damage" from="." to="BossController" method="_on_boss_take_damage"]
 [connection signal="timeout" from="Timers/BetweenAttackTime" to="BossStateMachine" method="_on_between_attack_time_timeout"]
 [connection signal="timeout" from="Timers/Attack1Delay" to="BossStateMachine/Attack1BossState" method="_on_attack_1_delay_timeout"]
 [connection signal="timeout" from="Timers/Attack2Delay" to="BossStateMachine/Attack2BossState" method="_on_attack_2_delay_timeout"]

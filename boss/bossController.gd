@@ -56,3 +56,9 @@ func spawn_spike_row(start: Vector2, count: int, distance: int):
 		s.position = Vector2(
 			start.x + i * distance, start.y
 		)
+
+
+func _on_boss_take_damage(recieved_damage: int) -> void:
+	b.Health -= recieved_damage
+	if b.Health <= 0:
+		b.queue_free()

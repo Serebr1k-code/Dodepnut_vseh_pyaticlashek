@@ -14,6 +14,7 @@ signal take_damage(recieved_damage: int)
 @onready var dash_repeat_delay: Timer = $Timers/DashRepeatDelay
 @onready var liberal_move_delay: Timer = $Timers/LiberalMoveDelay
 @onready var hitbox: Area2D = $Hitbox
+@onready var inv_frames: Timer = $Timers/InvFrames
 
 @export_category("Stats")
 @export var health := 15
@@ -28,10 +29,10 @@ signal take_damage(recieved_damage: int)
 @export_category("Liberal settings")
 @export var proj_count := 3
 @export var proj_speed := 300
-@export var proj_ang := deg_to_rad(15)
+@export var proj_ang := deg_to_rad(30)
 @export var proj_delay := 0.7
 @export var move_delay := 0.5
-@export var height := 200
+@export var height := 250
 @export var height_rando := 50
 @export var left_right_rando := 200
 @export_category("Dash settings")
@@ -40,6 +41,7 @@ signal take_damage(recieved_damage: int)
 
 var target
 var proj_start_ang := proj_ang*(proj_count-1)/(-2.0)
+var is_invincible := false
 
 func _ready() -> void: # задаем данные из конфига
 	attack_swap.wait_time = attack_swap_delay
@@ -48,3 +50,5 @@ func _ready() -> void: # задаем данные из конфига
 	liberal_move_delay.wait_time = move_delay
 	agro_collision.shape.radius = agro_radius
 	rage_timer.wait_time = forgive_time
+	
+	if sprite: sprite.play("idle")

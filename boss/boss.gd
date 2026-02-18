@@ -1,6 +1,7 @@
 class_name Boss extends CharacterBody2D
 
 signal attack_end()
+signal take_damage(recieved_damage: int)
 
 @onready var bossProjectile = preload("res://boss/boss_projectile.tscn")
 @onready var bossSpike = preload("res://boss/boss_spike.tscn")

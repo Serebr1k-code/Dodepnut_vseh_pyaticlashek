@@ -53,6 +53,15 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 
 func _on_flying_enemy_take_damage(recieved_damage: int) -> void:
-	e.health -= recieved_damage
-	if e.health <= 0:
-		e.queue_free()
+	if not e.is_invincible:
+		e.health -= recieved_damage
+		if e.health <= 0:
+			e.queue_free()
+		e.is_invincible = true
+		e.inv_frames.start()
+		e.sprite.modulate = Color(2, 2, 2, 1)
+
+
+func _on_inv_frames_timeout() -> void:
+	e.is_invincible = false
+	e.sprite.modulate = Color(1, 1, 1, 1.0)
