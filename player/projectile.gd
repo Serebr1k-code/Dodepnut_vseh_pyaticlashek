@@ -18,6 +18,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			$".".queue_free() # надо кстати тут конфиг сделать ему, чтобы патерны были веселые
 			return # к примеру самонаводка или сдвиг
 	if not body.is_in_group("Player") and not fromPlayer and body.is_in_group("HaveHealth"): return
-	if damage and body.is_in_group("HaveHealth"):
+	if body.is_in_group("HaveHealth"):
 		body.take_damage.emit(damage)
 	$".".queue_free()

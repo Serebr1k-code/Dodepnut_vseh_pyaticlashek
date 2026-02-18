@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://buxe3aslh20sa" path="res://player/player.tscn" id="1_ymuff"]
 [ext_resource type="Texture2D" uid="uid://30ryuh65wcrg" path="res://resources/ground.png" id="2_6cqfu"]
 [ext_resource type="PackedScene" uid="uid://dxcxgu5koeh62" path="res://player/hud.tscn" id="3_6cqfu"]
+[ext_resource type="PackedScene" uid="uid://d3lxapmo4mx2m" path="res://enemy/flying_enemy.tscn" id="5_l7rq3"]
 [ext_resource type="AudioStream" uid="uid://d4aesyswwsg1h" path="res://music.wav" id="6_gpn76"]
 [ext_resource type="PackedScene" uid="uid://dws56saqrvhe3" path="res://boss/boss.tscn" id="7_p2xqm"]
 [ext_resource type="Texture2D" uid="uid://mp43c4u33tu0" path="res://resources/star.png" id="7_xbbld"]
@@ -313,4 +314,7 @@ scale_amount_max = 0.5
 color_ramp = SubResource("Gradient_p2xqm")
 
 [node name="Boss" parent="." unique_id=1756071142 instance=ExtResource("7_p2xqm")]
-position = Vector2(0, -256)
+position = Vector2(0, -300)
+
+[node name="FlyingEnemy" parent="." unique_id=1897619288 instance=ExtResource("5_l7rq3")]
+position = Vector2(-690, -178)

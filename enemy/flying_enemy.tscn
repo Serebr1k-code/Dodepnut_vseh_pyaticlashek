@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c47rg10iymatk" path="res://enemy/flying_enemy.gd" id="1_2mvqj"]
 [ext_resource type="Script" uid="uid://mbf5ub1jit62" path="res://Controllers/FlyingEnemyController.gd" id="2_ofsxj"]
-[ext_resource type="Texture2D" uid="uid://ct66dh54bwspu" path="res://icon.svg" id="2_ppra6"]
+[ext_resource type="Texture2D" uid="uid://do7yq4hk2sues" path="res://resources/enemy.png" id="2_yy35i"]
 [ext_resource type="Script" uid="uid://csr526cahxls6" path="res://StateMachines/Enemy/FlyingEnemyStateMachine.gd" id="4_kbmdj"]
 [ext_resource type="Script" uid="uid://mqid3hgtqt8s" path="res://StateMachines/Enemy/DashFlyingEnemyState.gd" id="5_yy35i"]
 [ext_resource type="Script" uid="uid://dk822sgf7v3qs" path="res://StateMachines/Enemy/IdleFlyingEnemyState.gd" id="6_wb8dy"]
@@ -11,12 +11,54 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_fm2vn"]
 radius = 13.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb8dy"]
+atlas = ExtResource("2_yy35i")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4loue"]
+atlas = ExtResource("2_yy35i")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tyti"]
+atlas = ExtResource("2_yy35i")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_058us"]
+atlas = ExtResource("2_yy35i")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdqja"]
+atlas = ExtResource("2_yy35i")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jdku"]
+atlas = ExtResource("2_yy35i")
+region = Rect2(160, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_wjonb"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wb8dy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4loue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tyti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_058us")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xdqja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jdku")
+}],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yy35i"]
@@ -30,23 +72,21 @@ collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_2mvqj")
 
-[node name="Icon" type="Sprite2D" parent="." unique_id=260770883]
-position = Vector2(2.3841858e-07, 4.4703484e-07)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_ppra6")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1479229121]
 shape = SubResource("CircleShape2D_fm2vn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1608910761]
+position = Vector2(0, -16)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_wjonb")
 animation = &"idle"
+frame = 4
+frame_progress = 0.89341056
 
 [node name="Nav" type="NavigationAgent2D" parent="." unique_id=1021877463]
 path_postprocessing = 2
 avoidance_enabled = true
 max_speed = 100000.0
-debug_enabled = true
 
 [node name="FlyingEnemyController" type="Node" parent="." unique_id=879162464 node_paths=PackedStringArray("e", "m")]
 script = ExtResource("2_ofsxj")
@@ -111,6 +151,10 @@ wait_time = 0.5
 [node name="LiberalMoveDelay" type="Timer" parent="Timers" unique_id=1868558503]
 wait_time = 0.5
 
+[node name="InvFrames" type="Timer" parent="Timers" unique_id=115512659]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="take_damage" from="." to="FlyingEnemyController" method="_on_flying_enemy_take_damage"]
 [connection signal="navigation_finished" from="Nav" to="FlyingEnemyStateMachine" method="_on_nav_navigation_finished"]
 [connection signal="velocity_computed" from="Nav" to="FlyingEnemyController" method="_on_nav_velocity_computed"]
@@ -122,3 +166,4 @@ wait_time = 0.5
 [connection signal="timeout" from="Timers/LiberalDelay" to="FlyingEnemyStateMachine/LiberalFlyingEnemyState" method="_on_liberal_delay_timeout"]
 [connection signal="timeout" from="Timers/DashRepeatDelay" to="FlyingEnemyStateMachine/DashFlyingEnemyState" method="_on_dash_repeat_delay_timeout"]
 [connection signal="timeout" from="Timers/LiberalMoveDelay" to="FlyingEnemyStateMachine/LiberalFlyingEnemyState" method="_on_liberal_move_delay_timeout"]
+[connection signal="timeout" from="Timers/InvFrames" to="FlyingEnemyController" method="_on_inv_frames_timeout"]

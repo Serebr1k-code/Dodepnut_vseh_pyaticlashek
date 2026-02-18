@@ -10,8 +10,8 @@ radius = 4.0
 radius = 5.0
 
 [node name="Projectile" type="CharacterBody2D" unique_id=1865185389]
-collision_layer = 2
-collision_mask = 4
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_islhu")
 
 [node name="Ball" type="Sprite2D" parent="." unique_id=245791362]
@@ -24,8 +24,8 @@ shape = SubResource("CircleShape2D_islhu")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1904804559]
 scale = Vector2(2, 2)
-collision_layer = 2
-collision_mask = 5
+collision_layer = 4
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1972999576]
 shape = SubResource("CircleShape2D_q5b1o")

@@ -60,7 +60,7 @@ func handle_input() -> void:
 		p.last_dir = p.raw_dir.x
 	
 	# Get dash input
-	if Input.is_action_just_pressed("Dash") and p.canDash and not p.dashing and p.dash_delay.is_stopped() and not p.attacking:
+	if p.have_dash and Input.is_action_just_pressed("Dash") and p.canDash and not p.dashing and p.dash_delay.is_stopped() and not p.attacking:
 		#p.dash_particles.emitting = true
 		p.dashing = true
 		p.canDash = false
@@ -125,13 +125,15 @@ func _on_dash_delay_timeout() -> void:
 
 # там короче чтобы анимация магии была, есть таймер, и вот в его конце я спавню проджектайлы
 func _on_magic_animation_timeout() -> void:
-	var proj : Dictionary [int, Projectile] = {}
-	for i in range(0, 1):
-		proj[i] = p.projectile_scene.instantiate()
-		proj[i].position = p.spell_pos.global_position
-		proj[i].velocity = Vector2((600+randi_range(0, 100)) * p.last_dir, randi_range(-200, 200))
-	for i in range(0, 1):
-		p.get_parent().add_child(proj[i])
+	var proj: Projectile
+	for i in range(0, p.proj_count):
+		proj = p.projectile_scene.instantiate()
+		proj.fromPlayer = true
+		proj.damage = p.proj_damage
+		proj.position = p.spell_pos.global_position
+		proj.velocity = Vector2.from_angle(randf_range(-p.proj_ang, p.proj_ang)) * p.proj_speed
+		proj.velocity.x *= p.last_dir
+		p.get_parent().add_child(proj)
 	m.change_state("idle")
 
 func handle_melee_attacks() -> void:

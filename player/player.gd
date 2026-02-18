@@ -45,7 +45,13 @@ const G := Vector2(0, 980)
 @export var Damage := 5
 @export var max_fly_time := 3.0
 @export_category("Abilities")
-@export var have_dash := false # Забил пока что так как не надо
+@export var have_dash := false
+@export var cast_speed := 1.0
+@export_category("Projectiles")
+@export var proj_ang := deg_to_rad(10)
+@export var proj_speed := 600
+@export var proj_count := 2
+@export var proj_damage := 15
 
 # canSmth vars
 var canAttack := true
@@ -70,3 +76,6 @@ var last_dir := 1.0
 var next_attack := 0
 var combo_counter := 0.0
 var fly_time := max_fly_time
+
+func _ready() -> void:
+	magic_anim.wait_time = 2.6/cast_speed

@@ -12,8 +12,10 @@ func enter():
 	p.casting = true
 	p.magic_anim.start()
 	p.velocity.x = 0
+	p.sprite.speed_scale = p.cast_speed
 
 func exit():
+	p.sprite.speed_scale = 1
 	p.casting = false
 
 func update_input(event: InputEvent):
