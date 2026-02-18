@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwglqey52ax24"
-path="res://.godot/imported/Slash1.png-c68563184488c9e5135af6fce413852e.ctex"
+uid="uid://c12pfishwkmiq"
+path="res://.godot/imported/sword_death.png-7771549b3ab83da7ac0b513a366fe51e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/PlayerSword/Slash1.png"
-dest_files=["res://.godot/imported/Slash1.png-c68563184488c9e5135af6fce413852e.ctex"]
+source_file="res://resources/PlayerSword/меч/sword_death.png"
+dest_files=["res://.godot/imported/sword_death.png-7771549b3ab83da7ac0b513a366fe51e.ctex"]
 
 [params]
 

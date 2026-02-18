@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dulyinbfst3wd"
-path="res://.godot/imported/sword_walk.png-c754fdc03e899e7636427d714034420d.ctex"
+uid="uid://chsecdx8s7urt"
+path="res://.godot/imported/FX_idle.png-58d6377d16eccc19a4347e5ef20b113a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/PlayerSword/sword_walk.png"
-dest_files=["res://.godot/imported/sword_walk.png-c754fdc03e899e7636427d714034420d.ctex"]
+source_file="res://resources/PlayerSword/меч/FX_idle.png"
+dest_files=["res://.godot/imported/FX_idle.png-58d6377d16eccc19a4347e5ef20b113a.ctex"]
 
 [params]
 

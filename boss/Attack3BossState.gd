@@ -1,22 +1,20 @@
 class_name Attack3BossState extends State
 
-@export var boss: Boss
-@export var controller: BossController
+@export var b: Boss
+@export var c: BossController
 
-@export var default_attack_count : int
-@export var spike_spawn_distance : int
-@export var spike_count : int
-
-var current_attack_count = default_attack_count
+var current_attack_count
 var signal_emitted = false
 var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
 	name = "attack3"
+	if b:
+		current_attack_count = b.default_attack_count3
 	
 func enter():
-	current_attack_count = default_attack_count
-	boss.attack3Delay.start()	
+	current_attack_count = b.default_attack_count3
+	b.attack3Delay.start()	
 	signal_emitted = false
 	
 func exit():
@@ -34,16 +32,16 @@ func update_physics(delta: float):
 func _on_attack_3_delay_timeout() -> void:
 	if current_attack_count <= 0:
 		if !signal_emitted:
-			boss.emit_signal("attack_end")
+			b.emit_signal("attack_end")
 			signal_emitted = true
-			boss.attack3Delay.stop()
+			b.attack3Delay.stop()
 		return
 	
-	controller.spawn_spike_row(
-		Vector2(-(spike_count * 0.5 * spike_spawn_distance) + rng.randi() % spike_spawn_distance, 200), 
-		spike_count, 
-		spike_spawn_distance
+	c.spawn_spike_row(
+		Vector2(-(b.spike_count3 * 0.5 * b.spike_spawn_distance3) + randi() % int(b.spike_spawn_distance3), 200), 
+		b.spike_count3, 
+		b.spike_spawn_distance3
 	)
 	
 	current_attack_count -= 1
-	boss.attack2Delay.start()
+	b.attack2Delay.start()

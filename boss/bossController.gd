@@ -1,7 +1,6 @@
 class_name BossController extends Node
 
-@export var boss : Boss
-@export var boss_sprite : AnimatedSprite2D
+@export var b : Boss
 
 func _ready() -> void:
 	pass
@@ -11,7 +10,7 @@ func _process(delta: float) -> void:
 
 func spawn_circle_of_projectiles(count: int, projectile_spawn_distance: int, center: Vector2, deg_shift: float):
 	for i in range(count):
-		var p = boss.bossProjectile.instantiate()
+		var p = b.bossProjectile.instantiate()
 		get_parent().add_child(p) 
 
 		var x_multiplier = sin(deg_to_rad(i * (360 / count) + deg_shift))
@@ -32,7 +31,7 @@ func spawn_circle_of_projectiles_with_hole(count: int, speed: int, projectile_sp
 		var deg = i * (360 / count)
 		if (deg % 180 >= be and deg % 180 <= le): continue
 		
-		var p = boss.bossProjectile.instantiate()
+		var p = b.bossProjectile.instantiate()
 		get_parent().add_child(p) 
 		p.projectileSpeed = speed
 
@@ -51,7 +50,7 @@ func spawn_circle_of_projectiles_with_hole(count: int, speed: int, projectile_sp
 		
 func spawn_spike_row(start: Vector2, count: int, distance: int):
 	for i in range(count):
-		var s = boss.bossSpike.instantiate()
+		var s = b.bossSpike.instantiate()
 		get_parent().add_child(s)
 		
 		s.position = Vector2(

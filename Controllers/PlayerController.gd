@@ -4,6 +4,24 @@ class_name PlayerController extends Node
 @export var m: PlayerStateMachine
 
 func _process(delta: float) -> void:
+	# Поворот игрока и всех хитбоксов
+	p.sprite.flip_h = p.last_dir == -1 
+	p.sword.flip_h = p.last_dir == -1 
+	p.fx.flip_h = p.last_dir == -1 
+	p.spell_pos.position.x = 14.5*p.last_dir
+	if p.last_dir == -1:
+		p.slash.scale = Vector2(-1, 1)
+	else:
+		p.slash.scale = Vector2(1, 1)
+	var combo_boost:float = 1.0 + p.combo_counter/10
+	p.slash.scale *= combo_boost
+	if p.attacking:
+		p.fx.position = Vector2(0.5, -5.5) * combo_boost
+		p.fx.scale = Vector2.ONE * combo_boost
+	else:
+		p.fx.position = Vector2(0.5, -5.5)
+		p.fx.scale = Vector2.ONE
+	
 	# Quit game if player dies
 	if p.Health <= 0:
 		get_tree().quit()
@@ -16,6 +34,9 @@ func _process(delta: float) -> void:
 		p.jumping = true
 	if p.is_on_floor() and not (p.canDash and not p.attacking):
 		p.canDash = true
+	if p.is_on_floor():
+		p.fly_time = p.max_fly_time
+		p.hud.update_fly(p.fly_time)
 	
 
 func _physics_process(delta: float) -> void:
@@ -35,7 +56,7 @@ func handle_input() -> void:
 	# Get move input
 	p.raw_dir = Vector2(Input.get_axis("Left", "Right"), Input.get_axis("Up", "Down"))
 	p.move_dir = p.raw_dir.x
-	if p.raw_dir.x and !p.dashing:
+	if p.raw_dir.x and not p.dashing and not p.attacking:
 		p.last_dir = p.raw_dir.x
 	
 	# Get dash input
@@ -58,22 +79,18 @@ func handle_input() -> void:
 func handle_movement() -> void:
 	# Move player left and right
 	if not p.dashing:
-		p.sprite.flip_h = p.last_dir == -1
-		p.spell_pos.position.x = 14.5*p.last_dir
 		if p.move_dir:
 			p.velocity.x = move_toward(p.velocity.x, p.move_dir * p.SPEED, p.SPEED)
 		else:
 			p.velocity.x = move_toward(p.velocity.x, 0, p.SPEED)
 	# Move player while dash
 	else:
-		p.sprite.flip_h = p.last_dir == -1
-		p.spell_pos.position.x = 14.5*p.last_dir
 		p.velocity.x = p.last_dir * p.SPEED * 3
 		p.velocity.y = 0.0
 
 func handle_jump() -> void:
 	# Handle jump
-	if Input.is_action_just_pressed("Jump"):
+	if p.is_on_floor() and Input.is_action_just_pressed("Jump"):
 		p.velocity.y = p.JUMP_VELOCITY
 
 func _on_dash_length_timeout() -> void:
@@ -117,9 +134,9 @@ func _on_magic_animation_timeout() -> void:
 		p.get_parent().add_child(proj[i])
 	m.change_state("idle")
 
-# вот эту штуку надо написать
 func handle_melee_attacks() -> void:
-	pass
+	if Input.is_action_just_pressed("Attack") and p.canAttack and not p.attacking:
+		m.change_state("melee_attack")
 
 # перезарядка шейд деша
 func _on_shade_dash_delay_timeout() -> void:

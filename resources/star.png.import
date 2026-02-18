@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d13ok50euel6s"
-path="res://.godot/imported/sword_hit.png-d7973f54c847a7056a31aa28e3f94c40.ctex"
+uid="uid://mp43c4u33tu0"
+path="res://.godot/imported/star.png-42f4daa6d48a40b8cf7774da611238b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/PlayerSword/sword_hit.png"
-dest_files=["res://.godot/imported/sword_hit.png-d7973f54c847a7056a31aa28e3f94c40.ctex"]
+source_file="res://resources/star.png"
+dest_files=["res://.godot/imported/star.png-42f4daa6d48a40b8cf7774da611238b7.ctex"]
 
 [params]
 

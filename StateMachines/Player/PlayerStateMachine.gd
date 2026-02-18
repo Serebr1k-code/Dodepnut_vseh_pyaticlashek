@@ -8,7 +8,9 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	current_state.update(delta)
 	# определяем состряния
-	if current_state.name == "cast":
+	if p.attacking:
+		change_state("melee_attack")
+	elif current_state.name == "cast" or (current_state.name == "fly" and not p.is_on_floor()):
 		pass
 	elif !p.is_on_floor():
 		change_state("airborne")
