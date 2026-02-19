@@ -20,3 +20,9 @@ func update_health(new_hp: int):
 
 func update_fly(fly_time: float):
 	$Fly.value = fly_time
+
+func update_soul(new_soul: float):
+	$Soul.value = new_soul
+
+func update_weapon(weapon_id: int):
+	$WeaponHud.play(str(weapon_id))

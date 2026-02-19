@@ -30,6 +30,7 @@ signal take_damage(recieved_damage : int)
 @onready var attack_timer: Timer =  $Timers/AttackTimer
 @onready var combo: Timer = $Timers/Combo
 @onready var swing_delay: Timer = $Timers/SwingDelay
+@onready var hitbox_delay: Timer = $Timers/HitboxDelay
 
 # consts
 const G := Vector2(0, 980)
@@ -50,7 +51,9 @@ const G := Vector2(0, 980)
 @export var proj_damage := 5
 @export var cast_speed := 1.0
 @export_category("Attacks")
-@export var attack_settings: Array[AttackSettings]
+@export var weapon1_settings: Array[AttackSettings]
+@export var weapon2_settings: Array[AttackSettings]
+@export var weapon3_settings: Array[AttackSettings]
 
 # canSmth vars
 var canAttack := true
@@ -78,6 +81,7 @@ var fly_time := max_fly_time
 var target
 var current_damage := 5
 var current_damage_type : Damage.Type = Damage.Type.Physical
+var current_weapon := 0
 
 func _ready() -> void:
 	magic_anim.wait_time = 2.6/cast_speed

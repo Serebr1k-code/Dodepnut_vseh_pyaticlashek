@@ -81,6 +81,19 @@ func handle_input() -> void:
 	# Get cast spell input
 	if Input.is_action_just_pressed("Spell") and p.canCast and not p.casting:
 		m.change_state("cast")
+	
+	if Input.is_action_just_pressed("1weapon"):
+		p.next_attack = 0
+		p.current_weapon = 0
+		p.hud.update_weapon(p.current_weapon)
+	elif Input.is_action_just_pressed("2weapon"):
+		p.next_attack = 0
+		p.current_weapon = 1
+		p.hud.update_weapon(p.current_weapon)
+	elif Input.is_action_just_pressed("3weapon"):
+		p.next_attack = 0
+		p.current_weapon = 2
+		p.hud.update_weapon(p.current_weapon)
 
 func handle_movement() -> void:
 	# Move player left and right

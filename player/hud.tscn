@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c6a3iqjyt8iya" path="res://resources/player/HEART_EMPTY.png" id="1_2e3ur"]
 [ext_resource type="Script" uid="uid://deekj8s2eypr0" path="res://player/hud.gd" id="1_6lbh3"]
 [ext_resource type="Texture2D" uid="uid://bchkb4idg5reo" path="res://resources/player/HEART_FULL.png" id="2_6lbh3"]
+[ext_resource type="Texture2D" uid="uid://dlh67njcafxkp" path="res://resources/WeaponHud.png" id="4_2tfq1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2tfq1"]
 atlas = ExtResource("1_2e3ur")
@@ -143,6 +144,45 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pffjo"]
+atlas = ExtResource("4_2tfq1")
+region = Rect2(0, 0, 192, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrsyp"]
+atlas = ExtResource("4_2tfq1")
+region = Rect2(192, 0, 192, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ktge"]
+atlas = ExtResource("4_2tfq1")
+region = Rect2(384, 0, 192, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aebv2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pffjo")
+}],
+"loop": true,
+"name": &"0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrsyp")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ktge")
+}],
+"loop": true,
+"name": &"2",
+"speed": 5.0
+}]
+
 [node name="Hud" type="CanvasLayer" unique_id=578226851]
 script = ExtResource("1_6lbh3")
 
@@ -186,3 +226,34 @@ offset_bottom = 91.0
 max_value = 3.0
 value = 3.0
 fill_mode = 3
+
+[node name="Label" type="Label" parent="." unique_id=896223503]
+offset_top = 64.0
+offset_right = 38.0
+offset_bottom = 87.0
+text = "Fly"
+horizontal_alignment = 1
+
+[node name="Soul" type="ProgressBar" parent="." unique_id=1175186379]
+anchors_preset = -1
+anchor_right = 0.03
+anchor_bottom = 0.1
+offset_left = 57.0
+offset_top = 64.0
+offset_right = 61.0
+offset_bottom = 91.0
+max_value = 3.0
+fill_mode = 3
+
+[node name="Label2" type="Label" parent="." unique_id=719212492]
+offset_left = 57.0
+offset_top = 64.0
+offset_right = 95.0
+offset_bottom = 87.0
+text = "Soul"
+horizontal_alignment = 1
+
+[node name="WeaponHud" type="AnimatedSprite2D" parent="." unique_id=1722199995]
+position = Vector2(224, 96)
+sprite_frames = SubResource("SpriteFrames_aebv2")
+animation = &"0"

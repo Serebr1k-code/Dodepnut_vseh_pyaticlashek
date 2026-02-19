@@ -1,13 +1,28 @@
 class_name MeleeAttackPlayerState extends PlayerState
 
+var need_connect = true
+
 func _ready() -> void:
 	name = "melee_attack"
 
 func enter():
+	if need_connect:
+		p.slash.w0.body_entered.connect(on_slash_body_entered)
+		p.slash.w1.body_entered.connect(on_slash_body_entered)
+		p.slash.w2.body_entered.connect(on_slash_body_entered)
+		need_connect = false
 	#if p.hud: p.hud.change_current_state(name)
+	p.hitbox_delay.wait_time = 0.1/p.fx.speed_scale
 	p.attacking = true
 	p.canCast = false
-	if p.attack_settings[p.next_attack].delay <= 0.01:
+	var delay := 0.0
+	if p.current_weapon == 0:
+		delay = p.weapon1_settings[p.next_attack].delay
+	elif p.current_weapon == 1:
+		delay = p.weapon2_settings[p.next_attack].delay
+	elif p.current_weapon == 2:
+		delay = p.weapon3_settings[p.next_attack].delay
+	if delay <= 0.01:
 		enter_fr()
 	else:
 		p.swing_delay.start()
@@ -28,8 +43,8 @@ func update(delta: float):
 		p.sprite.play("run")
 	else:
 		p.sprite.play("idle")
-	if p.fx.animation.contains("slash") and p.fx.frame == 1:
-		p.slash.attack(p.next_attack)
+	if p.fx.animation.contains("slash") and p.hitbox_delay.is_stopped():
+		p.slash.attack(p.next_attack, p.current_weapon)
 	else:
 		p.slash.disable_all()
 	
@@ -45,8 +60,7 @@ func update_physics(delta: float):
 	c.handle_movement()
 	c.handle_jump()
 
-
-func _on_slash_body_entered(body: Node2D) -> void:
+func on_slash_body_entered(body: Node2D) -> void:
 	if body.is_in_group("HaveHealth") and not body is Player:
 		body.take_damage.emit(p.current_damage, p.current_damage_type)
 	if body is Projectile:
@@ -62,7 +76,12 @@ func _on_attack_timer_timeout() -> void:
 	p.sword.play("idle")
 	p.fx.play("idle")
 	p.next_attack += 1
-	p.next_attack = p.next_attack % p.slash.slashes.size()
+	if p.current_weapon == 0:
+		p.next_attack = p.next_attack % p.slash.weapon1.size()
+	elif p.current_weapon == 1:
+		p.next_attack = p.next_attack % p.slash.weapon2.size()
+	elif p.current_weapon == 2:
+		p.next_attack = p.next_attack % p.slash.weapon3.size()
 	p.combo.start()
 
 
@@ -70,14 +89,28 @@ func _on_swing_delay_timeout() -> void:
 	enter_fr()
 
 func enter_fr():
-	var target_anim := "slash" + str(p.next_attack)
+	var target_anim := str(p.current_weapon) + "slash" + str(p.next_attack)
 	p.sword.play(target_anim)
 	p.fx.play(target_anim)
-	p.fx.speed_scale = p.attack_settings[p.next_attack].speed_scale
-	p.sword.speed_scale = p.attack_settings[p.next_attack].speed_scale
-	p.current_damage = p.attack_settings[p.next_attack].damage
+	
+	if p.current_weapon == 0:
+		p.fx.speed_scale = p.weapon1_settings[p.next_attack].speed_scale
+		p.sword.speed_scale = p.weapon1_settings[p.next_attack].speed_scale
+		p.current_damage = p.weapon1_settings[p.next_attack].damage
+		p.current_damage_type = p.weapon1_settings[p.next_attack].damage_type
+	elif p.current_weapon == 1:
+		p.fx.speed_scale = p.weapon2_settings[p.next_attack].speed_scale
+		p.sword.speed_scale = p.weapon2_settings[p.next_attack].speed_scale
+		p.current_damage = p.weapon2_settings[p.next_attack].damage
+		p.current_damage_type = p.weapon2_settings[p.next_attack].damage_type
+	elif p.current_weapon == 2:
+		p.fx.speed_scale = p.weapon3_settings[p.next_attack].speed_scale
+		p.sword.speed_scale = p.weapon3_settings[p.next_attack].speed_scale
+		p.current_damage = p.weapon3_settings[p.next_attack].damage
+		p.current_damage_type = p.weapon3_settings[p.next_attack].damage_type
+		
 	p.attack_timer.wait_time = p.fx.sprite_frames.get_frame_count(target_anim) \
 	/ p.fx.sprite_frames.get_animation_speed(target_anim) \
 	/ p.fx.speed_scale
-	p.current_damage_type = p.attack_settings[p.next_attack].damage_type
 	p.attack_timer.start()
+	p.hitbox_delay.start()
