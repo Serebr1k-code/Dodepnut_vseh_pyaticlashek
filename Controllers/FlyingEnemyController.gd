@@ -70,7 +70,9 @@ func _on_flying_enemy_take_damage(recieved_damage: int, damage_type: Damage.Type
 		e.is_invincible = true
 		e.inv_frames.start()
 		e.sprite.modulate = Color(2, 2, 2, 1)
-
+# Очевидно никто не найдет этот комментарий
+# 1 из 3
+# 57
 
 func _on_inv_frames_timeout() -> void:
 	e.is_invincible = false

@@ -81,7 +81,7 @@ position = Vector2(0, -16)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_wjonb")
 animation = &"idle"
-frame_progress = 0.061762694
+frame_progress = 0.38252828
 
 [node name="Nav" type="NavigationAgent2D" parent="." unique_id=1021877463]
 path_postprocessing = 2

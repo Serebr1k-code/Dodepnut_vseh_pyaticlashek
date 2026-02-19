@@ -18,3 +18,7 @@ func update(delta: float):
 
 func update_physics(delta: float):
 	pass
+
+# Очевидно никто не найдет этот комментарий
+# 1 из 3
+# ЗОВ
